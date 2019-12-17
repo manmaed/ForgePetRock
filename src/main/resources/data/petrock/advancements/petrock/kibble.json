@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "petrock:kibble"
+    },
+    "title": {
+      "translate": "advancements.petrock.kibble.title"
+    },
+    "description": {
+      "translate": "advancements.petrock.kibble.description"
+    }
+  },
+  "parent": "petrock:petrock/petrockbox",
+  "criteria": {
+    "petrockbox": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "petrock:kibble"
+          }
+        ]
+      }
+    }
+  }
+}

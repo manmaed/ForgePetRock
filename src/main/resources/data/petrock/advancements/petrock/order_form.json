@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "petrock:orderform"
+    },
+    "title": {
+      "translate": "advancements.petrock.orderform.title"
+    },
+    "description": {
+      "translate": "advancements.petrock.orderform.description"
+    }
+  },
+  "parent": "petrock:petrock/root",
+  "criteria": {
+    "order_form": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "petrock:orderform"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "petrock:stoneium"
+    },
+    "title": {
+      "translate": "advancements.petrock.stoneiumore.title"
+    },
+    "description": {
+      "translate": "advancements.petrock.stoneiumore.description"
+    }
+  },
+  "parent": "petrock:petrock/root",
+  "criteria": {
+    "get_stoneium": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "petrock:stoneium"
+          }
+        ]
+      }
+    }
+  }
+}
