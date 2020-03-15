@@ -4,9 +4,10 @@ package net.manmaed.petrock.client.render.model;
  * Created by manmaed on 26/02/2017.
  */
 
-import net.manmaed.petrock.entitys.EntityPetRock;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.entity.model.RendererModel;
+import com.google.common.collect.ImmutableList;
+import net.minecraft.client.renderer.entity.model.SegmentedModel;
+import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -16,8 +17,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 
 @OnlyIn(Dist.CLIENT)
-public class ModelPetRock extends EntityModel<EntityPetRock> {
-    public RendererModel shape1;
+public class ModelPetRock<T extends Entity> extends SegmentedModel<T> {
+    public ModelRenderer shape1;
    /* public Cuboid HatBottem;
     public Cuboid hatp1;
     public Cuboid hatp2;
@@ -36,7 +37,7 @@ public class ModelPetRock extends EntityModel<EntityPetRock> {
     public ModelPetRock() {
         this.textureWidth = 64;
         this.textureHeight = 32;
-        this.shape1 = new RendererModel(this, 0, 0);
+        this.shape1 = new ModelRenderer(this, 0, 0);
         this.shape1.setRotationPoint(0.0F, 24.0F, 0.0F);
         this.shape1.addBox(-4.5F, -9.0F, -4.5F, 9, 9, 9, 0.0F);
 
@@ -93,14 +94,19 @@ public class ModelPetRock extends EntityModel<EntityPetRock> {
     }
 
     @Override
-    public void render(EntityPetRock entity, float f, float f1, float f2, float f3, float f4, float f5) {
-        this.shape1.render(f5);
+    public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+
+    }
+
+    @Override
+    public Iterable<ModelRenderer> getParts() {
+        return ImmutableList.of(shape1);
     }
 
     /**
      * This is a helper function from Tabula to set the rotation of model parts
      */
-    public void setRotateAngle(RendererModel model, float x, float y, float z) {
+    public void setRotateAngle(ModelRenderer model, float x, float y, float z) {
         model.rotateAngleX  = x;
         model.rotateAngleY  = y;
         model.rotateAngleZ  = z;

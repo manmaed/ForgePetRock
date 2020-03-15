@@ -2,15 +2,13 @@ package net.manmaed.petrock;
 
 import net.manmaed.petrock.blocks.PRBlocks;
 import net.manmaed.petrock.client.render.entity.RenderPetRock;
-import net.manmaed.petrock.command.PRCommands;
 import net.manmaed.petrock.config.PRConfig;
 import net.manmaed.petrock.entitys.EntityPetRock;
+import net.manmaed.petrock.entitys.PREntitys;
 import net.manmaed.petrock.hats.PRHats;
 import net.manmaed.petrock.items.PRItems;
 import net.manmaed.petrock.libs.Refs;
-import net.manmaed.petrock.worldgen.OreGen;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
@@ -63,23 +61,25 @@ public class PetRock {
 
     private void init(final FMLCommonSetupEvent event) {
         // some preinit code;
-        OreGen.setupOreGen();
+        /*OreGen.setupOreGen();*/
     }
 
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        if(Minecraft.getInstance().getSession().getPlayerID().replace("-","").equals(slow_uuid)){
+        /*if(Minecraft.getInstance().getSession().getPlayerID().replace("-","").equals(slow_uuid)){
             PRHats.slowisplaying();
-        }
-        RenderingRegistry.registerEntityRenderingHandler(EntityPetRock.class, RenderPetRock::new);
+        }*/
+        RenderingRegistry.registerEntityRenderingHandler(PREntitys.petrock, RenderPetRock::new);
         /*
          * LatvianModder Improved!
          */
-        new Thread(PRHats::load).start();
+        //Temp Hat:
+        PRHats.slowisplaying();
+        /*new Thread(PRHats::load).start();*/
     }
 
     private void serverLoad(FMLServerStartingEvent event) {
-        PRCommands.register(event.getCommandDispatcher());
+        /*PRCommands.register(event.getCommandDispatcher());*/
     }
 
 

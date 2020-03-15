@@ -36,7 +36,7 @@ public class EntityPetRock extends TameableEntity {
         this.sitGoal = new SitGoal(this);
         this.goalSelector.addGoal(0, new SwimGoal(this));
         this.goalSelector.addGoal(1, this.sitGoal);
-        this.goalSelector.addGoal(2, new FollowOwnerGoal(this, 1D, 4F, 2F));
+        this.goalSelector.addGoal(2, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
         this.goalSelector.addGoal(3, new LookAtGoal(this, PlayerEntity.class, 8F));
         this.goalSelector.addGoal(4, new RandomWalkingGoal(this, 1D));
 
