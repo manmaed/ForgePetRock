@@ -1,7 +1,6 @@
 package net.manmaed.petrock.client.render.layers;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.manmaed.petrock.client.render.model.ModelChristmasHat;
 import net.manmaed.petrock.client.render.model.ModelPetRock;
@@ -27,46 +26,20 @@ public class ChristmasFeatureRenderer extends LayerRenderer<EntityPetRock, Model
         super(entityRendererIn);
     }
 
-
-    private float interpolateValues(float prevVal, float nextVal, float partialTick) {
-        return prevVal + partialTick * (nextVal - prevVal);
-    }
-
     @Override
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, EntityPetRock entityPetRock, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (PRHats.christmas) {
-            GlStateManager.pushMatrix();
+            matrixStackIn.push();
             if (PRHats.slowpoke) {
                 Float size = 1.5F;
-                GlStateManager.translatef(0F, -2.195F, 0.05F);
-                GlStateManager.scalef(size, size, size);
+                matrixStackIn.translate(0F, -2.195F, 0.05F);
+                matrixStackIn.scale(size, size, size);
             } else {
-                GlStateManager.translatef(0F, -0.5626F, 0F);
+                matrixStackIn.translate(0F, -0.5626F, 0F);
             }
-            float pitch = interpolateValues(entityPetRock.prevRotationPitch, entityPetRock.rotationPitch, partialTicks);
             IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEntitySolid(skin));
             hat.renderSanta(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY);
-            //GlStateManager.rotate(pitch, 1.0F, 0.0F, 0.0F);
-            GlStateManager.popMatrix();
+            matrixStackIn.pop();
         }
     }
-
-    /*@Override
-    public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, EntityPetRock entityPetRock, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (PRHats.christmas) {
-            GlStateManager.pushMatrix();
-            if (PRHats.slowpoke) {
-                Float size = 1.5F;
-                GlStateManager.translatef(0F, -2.195F, 0.05F);
-                GlStateManager.scalef(size, size, size);
-            } else {
-                GlStateManager.translatef(0F, -0.5626F, 0F);
-            }
-            float pitch = interpolateValues(entityPetRock.prevRotationPitch, entityPetRock.rotationPitch, partialTicks);
-            IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEntitySolid(skin));
-            hat.renderSanta(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY);
-            //GlStateManager.rotate(pitch, 1.0F, 0.0F, 0.0F);
-            GlStateManager.popMatrix();
-        }
-    }*/
 }

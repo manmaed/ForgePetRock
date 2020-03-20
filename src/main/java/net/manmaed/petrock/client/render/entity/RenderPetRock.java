@@ -1,7 +1,7 @@
 package net.manmaed.petrock.client.render.entity;
 
 
-import net.manmaed.petrock.client.render.layers.SlowpokeFeatureRenderer;
+import net.manmaed.petrock.client.render.layers.*;
 import net.manmaed.petrock.client.render.model.ModelPetRock;
 import net.manmaed.petrock.entitys.EntityPetRock;
 import net.manmaed.petrock.libs.Refs;
@@ -15,14 +15,13 @@ import net.minecraft.util.ResourceLocation;
 public class RenderPetRock extends MobRenderer<EntityPetRock, ModelPetRock<EntityPetRock>> {
     public RenderPetRock(EntityRendererManager manager) {
         super(manager, new ModelPetRock(), 0.25F);
-        /*this.addLayer(new BirthdayFeatureRenderer(this));
+        this.addLayer(new BirthdayFeatureRenderer(this));
         this.addLayer(new ChristmasFeatureRenderer(this));
         this.addLayer(new HalloweenFeatureRenderer(this));
         this.addLayer(new SlowpokeFeatureRenderer(this));
         this.addLayer(new CageFeatureRenderer(this));
-        this.addLayer(new SignFeatureRenderer(this));*/
+        this.addLayer(new SignFeatureRenderer(this));
         /*this.addFeature(toString());*/
-        this.addLayer(new SlowpokeFeatureRenderer(this));
     }
 
     private static final ResourceLocation skinuntame = new ResourceLocation(Refs.id, "textures/entity/petrock.png");

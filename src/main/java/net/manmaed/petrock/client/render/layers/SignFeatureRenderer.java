@@ -1,7 +1,6 @@
 package net.manmaed.petrock.client.render.layers;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.manmaed.petrock.client.render.model.ModelPetRock;
 import net.manmaed.petrock.client.render.model.ModelSign;
@@ -28,20 +27,18 @@ public class SignFeatureRenderer extends LayerRenderer<EntityPetRock, ModelPetRo
     }
 
 
-    private float interpolateValues(float prevVal, float nextVal, float partialTick) {
-        return prevVal + partialTick * (nextVal - prevVal);
-    }
-
     @Override
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, EntityPetRock entityPetRock, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (PRHats.loneztar) {
-            GlStateManager.pushMatrix();
-            GlStateManager.translatef(0F, -0.5626F, 0F);
-            float pitch = interpolateValues(entityPetRock.prevRotationPitch, entityPetRock.rotationPitch, partialTicks);
+            Float size = 0.17F;
+            matrixStackIn.push();
+
+            //-Left+Right // -Up+Down // -Forward+Back
+            matrixStackIn.translate(-0.3F, 0.78F, -0.5F);
+            matrixStackIn.scale(size, size, size);
             IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEntitySolid(skin));
             hat.renderSign(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY);
-            //GlStateManager.rotate(pitch, 1.0F, 0.0F, 0.0F);
-            GlStateManager.popMatrix();
+            matrixStackIn.pop();
         }
     }
 }

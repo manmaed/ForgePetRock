@@ -1,7 +1,6 @@
 package net.manmaed.petrock.client.render.layers;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.manmaed.petrock.client.render.model.ModelCakeHat;
 import net.manmaed.petrock.client.render.model.ModelPetRock;
@@ -27,37 +26,14 @@ public class BirthdayFeatureRenderer extends LayerRenderer<EntityPetRock, ModelP
         super(entityRendererIn);
     }
 
-
-
-    /*@Override
-    public void render(EntityPetRock entityPetRock, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-        if (PRHats.birthday) {
-            GlStateManager.pushMatrix();
-            bindTexture(skin);
-            GlStateManager.translatef(0F, -0.5626F, 0F);
-            float pitch = interpolateValues(entityPetRock.prevRotationPitch, entityPetRock.rotationPitch, partialTicks);
-            hat.render(entityPetRock, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-            //GlStateManager.rotate(pitch, 1.0F, 0.0F, 0.0F);
-            GlStateManager.popMatrix();
-        }
-    }*/
-
-    private float interpolateValues(float prevVal, float nextVal, float partialTick) {
-        return prevVal + partialTick * (nextVal - prevVal);
-    }
-
-
     @Override
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, EntityPetRock entityPetRock, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (PRHats.birthday) {
-            GlStateManager.pushMatrix();
-
-            GlStateManager.translatef(0F, -0.5626F, 0F);
-            float pitch = interpolateValues(entityPetRock.prevRotationPitch, entityPetRock.rotationPitch, partialTicks);
+            matrixStackIn.push();
+            matrixStackIn.translate(0F, -0.5626F, 0F);
             IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEntitySolid(skin));
             hat.renderCake(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY);
-            //GlStateManager.rotate(pitch, 1.0F, 0.0F, 0.0F);
-            GlStateManager.popMatrix();
+            matrixStackIn.pop();
         }
     }
 }

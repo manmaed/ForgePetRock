@@ -1,11 +1,14 @@
 package net.manmaed.petrock.config;
 
+import net.manmaed.petrock.libs.Refs;
+import net.minecraftforge.common.ForgeConfigSpec;
+
 /**
  * Created by manmaed on 07/12/2019.
  * author: Naxanria
  */
 public class CommonConfig {
-    /*private static CommonConfig instance;
+    private static CommonConfig instance;
     private final ForgeConfigSpec.Builder builder;
     public ForgeConfigSpec.BooleanValue enableStoneiumGen;
 
@@ -40,5 +43,5 @@ public class CommonConfig {
                 .define("enablestoneium", true);
 
         builder.pop();
-    }*/
+    }
 }

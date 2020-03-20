@@ -157,34 +157,20 @@ public class EntityPetRock extends TameableEntity {
         return petRock;
     }
 
-    public boolean canMateWith(AnimalEntity otherAnimal)
-    {
-        if (otherAnimal == this)
-        {
+    public boolean canMateWith(AnimalEntity otherAnimal) {
+        if (otherAnimal == this) {
             return false;
-        }
-        else if (!this.isTamed())
-        {
+        } else if (!this.isTamed()) {
             return false;
-        }
-        else if (!(otherAnimal instanceof EntityPetRock))
-        {
+        } else if (!(otherAnimal instanceof EntityPetRock)) {
             return false;
-        }
-        else
-        {
+        } else {
             EntityPetRock petRock = (EntityPetRock)otherAnimal;
-
-            if (!petRock.isTamed())
-            {
+            if (!petRock.isTamed()) {
                 return false;
-            }
-            else if (petRock.isSitting())
-            {
+            } else if (petRock.isSitting()) {
                 return false;
-            }
-            else
-            {
+            } else {
                 return this.isInLove() && petRock.isInLove();
             }
         }

@@ -3,7 +3,7 @@ loaderVersion="[28,)" #mandatory (28 is current forge version)
 [[mods]]
 # The modid of the mod
 modId="petrock"
-version="0.5.0"
+version="0.6.0"
 #Jenkins Build pls
 #version="${file.jarVersion}"
 displayName="PetRock"

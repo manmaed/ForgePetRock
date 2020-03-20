@@ -27,7 +27,7 @@ public class PRHats {
         loneztar = false;
         try {
             hatData = HatData.getHatData(new URL("https://raw.githubusercontent.com/manmaed/Pet-Rock/master/hats.json"));
-            //hatData = HatData.getHatData(new URL("file:///F:/Modding/1_14_4/PetRock/run/Test/hattesting.json"));
+            //hatData = HatData.getHatData(new URL("file:///F:/Modding/1_15_2/PetRock/run/Test/hattesting.json"));
             String hat = hatData.isEventActive();
             usernames = hatData.getUsername();
             if(!userslow) {
