@@ -26,13 +26,6 @@ public class PRItems {
     @ObjectHolder(Refs.Register + "kibble")
     public static Item kibble;
 
-    /*@SubscribeEvent
-    public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
-        LogHelper.warn("Hello From Items Class!");
-        event.getRegistry().register(new OrderForm(new Item.Properties().group(PetRock.itemGroup).maxStackSize(1), "orderform"));
-        *//*event.getRegistry().register(PRItems.orderform);
-        event.getRegistry().register(PRItems.stoneium);*//*
-    }*/
 
     public static void load() {
 
