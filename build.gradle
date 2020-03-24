@@ -13,6 +13,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 def ENV = System.getenv()
+mod_version = 0.6
 version = ENV.BUILD_NUMBER ? "${ }.${ENV.BUILD_NUMBER}" : "${mod_version}.custom"
 
 group = 'net.manmaed.petrock' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
