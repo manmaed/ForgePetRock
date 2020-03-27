@@ -139,4 +139,3 @@ processResources {
         exclude "META-INF/mods.toml"
     }
 }
-build.dependsOn processResources
