@@ -3,7 +3,7 @@ loaderVersion="[28,)" #mandatory (28 is current forge version)
 [[mods]]
 # The modid of the mod
 modId="petrock"
-version="${version}"
+version="${file.jarVersion}"
 displayName="PetRock"
 # A URL to query for updates for this mod. See the JSON update specification <here>
 #updateJSONURL="http://myurl.me/" #optional
