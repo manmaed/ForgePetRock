@@ -130,13 +130,13 @@ publishing {
 processResources {
     inputs.property "version", project.version
 
-    from(sourceSets.main.resources.META-INF) {
-        include "mods.toml"
+    from(sourceSets.main.resources.srcDirs) {
+        include "META-INF/mods.toml"
         expand "version": project.version
     }
 
-    from(sourceSets.main.resources.META-INF) {
-        exclude "mods.toml"
+    from(sourceSets.main.resources.srcDirs) {
+        exclude "META-INF/mods.toml"
     }
 }
 build.dependsOn processResources
