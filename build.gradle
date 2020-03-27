@@ -139,3 +139,4 @@ processResources {
         exclude "mods.toml"
     }
 }
+build.dependsOn processResources
