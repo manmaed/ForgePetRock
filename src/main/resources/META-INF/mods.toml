@@ -1,21 +1,14 @@
-modLoader="javafml" #mandatory
-loaderVersion="[28,)" #mandatory (28 is current forge version)
+modLoader="javafml"
+loaderVersion="[32,)"
 [[mods]]
-# The modid of the mod
-modId="petrock"
 version="${version}"
-displayName="PetRock"
-# A URL to query for updates for this mod. See the JSON update specification <here>
-#updateJSONURL="http://myurl.me/" #optional
-# A text field displayed in the mod UI
 authors="manmaed"
-# The description text for the mod (multi line!) (#mandatory)
+# Change This Stuff below
+modId="petrock"
+displayName="PetRock"
+#issueTrackerURL="http://my.issue.tracker/"
+# The description text for the mod (multi line!)
 description='''
-Adds PetRocks to the Game!
+A Mod that adds PetRocks!
 '''
-[[dependencies.petrock]]
-    modId="minecraft"
-    mandatory=true
-    versionRange="[1.15.2]"
-    ordering="NONE"
-    side="BOTH"
+# End

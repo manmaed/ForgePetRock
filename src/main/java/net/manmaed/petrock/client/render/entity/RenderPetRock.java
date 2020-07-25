@@ -30,7 +30,7 @@ public class RenderPetRock extends MobRenderer<EntityPetRock, ModelPetRock<Entit
 
     @Override
     public ResourceLocation getEntityTexture(EntityPetRock entityPetRock) {
-        if(entityPetRock.isSitting()) {
+        if(entityPetRock.func_233684_eK_()) {
             return skintamesit;
         }
         if(entityPetRock.isTamed()) {

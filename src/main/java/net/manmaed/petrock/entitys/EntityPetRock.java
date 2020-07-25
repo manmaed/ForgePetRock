@@ -4,17 +4,14 @@ import net.manmaed.petrock.items.PRItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -26,26 +23,31 @@ import java.util.UUID;
  */
 public class EntityPetRock extends TameableEntity {
 
-    public EntityPetRock(EntityType<? extends TameableEntity> entityType, World world) {
-        super(entityType, world);
+    public EntityPetRock(EntityType<? extends EntityPetRock> type, World world) {
+        super(type, world);
         this.setTamed(false);
     }
 
     protected void registerGoals()
     {
-        this.sitGoal = new SitGoal(this);
-        this.goalSelector.addGoal(0, new SwimGoal(this));
-        this.goalSelector.addGoal(1, this.sitGoal);
-        this.goalSelector.addGoal(2, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
-        this.goalSelector.addGoal(3, new LookAtGoal(this, PlayerEntity.class, 8F));
-        this.goalSelector.addGoal(4, new RandomWalkingGoal(this, 1D));
+        this.goalSelector.addGoal(1, new SwimGoal(this));
+        this.goalSelector.addGoal(2, new SitGoal(this));
+        this.goalSelector.addGoal(3, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
+        this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 8F));
+        this.goalSelector.addGoal(5, new RandomWalkingGoal(this, 1D));
 
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
         this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setCallsForHelp());
     }
 
-    protected void registerAttributes()
+    @Override
+    protected void registerData() {
+        super.registerData();
+    }
+
+
+    /*protected void registerAttributes()
     {
         super.registerAttributes();
         this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
@@ -55,7 +57,7 @@ public class EntityPetRock extends TameableEntity {
         } else {
             this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(2.0D);
         }
-    }
+    }*/
 
 
 
@@ -88,14 +90,14 @@ public class EntityPetRock extends TameableEntity {
 
         if (tamed)
         {
-            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0D);
+            this.getAttribute(Attributes.field_233818_a_).setBaseValue(20.0D);
         } else {
-            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(1.0D);
+            this.getAttribute(Attributes.field_233818_a_).setBaseValue(1.0D);
         }
 
     }
 
-    public boolean processInteract(PlayerEntity player, Hand hand)
+    public ActionResultType func_230254_b_(PlayerEntity player, Hand hand)
     {
         ItemStack stack = player.getHeldItem(hand);
         if(stack.getItem().equals(Items.NAME_TAG)) {
@@ -105,7 +107,7 @@ public class EntityPetRock extends TameableEntity {
         {
             if (this.isOwner(player) && !this.world.isRemote && !stack.getItem().equals(PRItems.stoneium) && !stack.getItem().equals(PRItems.kibble))
             {
-                this.sitGoal.setSitting(!this.isSitting());
+                this.func_233687_w_(!this.func_233685_eM_());
                 this.isJumping = false;
                 this.navigator.clearPath();
             }
@@ -114,7 +116,7 @@ public class EntityPetRock extends TameableEntity {
                     stack.shrink(1);
                 }
                 this.heal(3.0F);
-                return true;
+                return ActionResultType.SUCCESS;
             }
         }
         else if (!this.isTamed()) {
@@ -127,7 +129,7 @@ public class EntityPetRock extends TameableEntity {
                     if (this.rand.nextInt(3) == 0) {
                         this.setTamedBy(player);
                         this.navigator.clearPath();
-                        this.sitGoal.setSitting(true);
+                        this.func_233687_w_(true);
                         this.setHealth(20.0F);
                         this.playTameEffect(true);
                         this.world.setEntityState(this, (byte) 7);
@@ -138,9 +140,9 @@ public class EntityPetRock extends TameableEntity {
                 }
 
             }
-            return true;
+            return ActionResultType.SUCCESS;
         }
-        return super.processInteract(player, hand);
+        return super.func_230254_b_(player, hand);
     }
 
     //TODO: Entitiy Breading
@@ -168,7 +170,7 @@ public class EntityPetRock extends TameableEntity {
             EntityPetRock petRock = (EntityPetRock)otherAnimal;
             if (!petRock.isTamed()) {
                 return false;
-            } else if (petRock.isSitting()) {
+            } else if (petRock.func_233684_eK_()) {
                 return false;
             } else {
                 return this.isInLove() && petRock.isInLove();
