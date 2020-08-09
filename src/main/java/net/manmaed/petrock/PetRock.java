@@ -3,16 +3,19 @@ package net.manmaed.petrock;
 import net.manmaed.petrock.client.render.entity.RenderPetRock;
 import net.manmaed.petrock.command.PRCommands;
 import net.manmaed.petrock.config.PRConfig;
-import net.manmaed.petrock.entitys.PREntitys;
+import net.manmaed.petrock.entitys.EntityPetRock;
+import net.manmaed.petrock.entitys.PREntityTypes;
 import net.manmaed.petrock.hats.PRHats;
 import net.manmaed.petrock.items.PRItems;
 import net.manmaed.petrock.libs.Refs;
 import net.manmaed.petrock.libs.RegisterHandler;
 import net.manmaed.petrock.worldgen.WorldGen;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -42,6 +45,7 @@ public class PetRock {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
         registeryHandler = new RegisterHandler();
         PRConfig.register(ModLoadingContext.get());
+        PREntityTypes.ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
 
         MinecraftForge.EVENT_BUS.addListener(this::serverLoad);
         MinecraftForge.EVENT_BUS.register(this);
@@ -53,6 +57,9 @@ public class PetRock {
 
     private void init(final FMLCommonSetupEvent event) {
         // some preinit code;
+        DeferredWorkQueue.runLater(() -> {
+            GlobalEntityTypeAttributes.put(PREntityTypes.PETROCK.get(), EntityPetRock.setCustomAttributes().func_233813_a_());
+        });
         WorldGen.setupOreGen();
     }
 
@@ -61,7 +68,7 @@ public class PetRock {
         if(Minecraft.getInstance().getSession().getPlayerID().replace("-","").equals(slow_uuid)){
             PRHats.slowisplaying();
         }
-        RenderingRegistry.registerEntityRenderingHandler(PREntitys.petrock, RenderPetRock::new);
+        RenderingRegistry.registerEntityRenderingHandler(PREntityTypes.PETROCK.get(), RenderPetRock::new);
         /*
          * LatvianModder Improved!
          */
@@ -69,6 +76,6 @@ public class PetRock {
     }
 
     private void serverLoad(FMLServerStartingEvent event) {
-        PRCommands.register(event.getCommandDispatcher());
+        PRCommands.register(event.getServer().getCommandManager().getDispatcher());
     }
 }

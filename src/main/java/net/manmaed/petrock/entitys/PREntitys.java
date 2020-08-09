@@ -3,6 +3,10 @@ package net.manmaed.petrock.entitys;
 import net.manmaed.petrock.libs.Refs;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
 
 /**
@@ -10,10 +14,6 @@ import net.minecraftforge.registries.ObjectHolder;
  */
 public class PREntitys
 {
-
-    @ObjectHolder(Refs.Register + "petrock")
-    public static EntityType<EntityPetRock> petrock;
-
 
     public static void load()
     {
@@ -29,11 +29,6 @@ public class PREntitys
          * @param eggSecondary Secondary egg color Dots
          */
 
-        EntityType.Builder.create(EntityPetRock:: new, EntityClassification.MISC).size(0.5f, 0.5f).build("petrock").setRegistryName("petrock");
-
-        /*EntityRegisterUtil.registerEntity(new ResourceLocation(Refs.id, "petrock"), EntityPetRock.class, "PetRock", id++, 0xdcd5d5, 0x686565);*/
-        //REQUEST: Add Evil Petrock LOL
-        //EntityRegisterUtil.registerEntity(ResourceLocationHelper.getResourceLocation("petrock"), EntityEvilRock.class, "EvilRock", id++, 0xdcd5d5, 0x686565);
     }
 
 }

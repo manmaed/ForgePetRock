@@ -4,6 +4,8 @@ import net.manmaed.petrock.items.PRItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -39,6 +41,7 @@ public class EntityPetRock extends TameableEntity {
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
         this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setCallsForHelp());
+
     }
 
     @Override
@@ -46,6 +49,12 @@ public class EntityPetRock extends TameableEntity {
         super.registerData();
     }
 
+
+    public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
+        return MobEntity.func_233666_p_()
+                .func_233815_a_(Attributes.field_233821_d_, 0.25D)
+                .func_233815_a_(Attributes.field_233818_a_, 2.0D);
+    }
 
     /*protected void registerAttributes()
     {
@@ -91,6 +100,7 @@ public class EntityPetRock extends TameableEntity {
         if (tamed)
         {
             this.getAttribute(Attributes.field_233818_a_).setBaseValue(20.0D);
+            this.setHealth(20.0F);
         } else {
             this.getAttribute(Attributes.field_233818_a_).setBaseValue(1.0D);
         }
@@ -125,7 +135,7 @@ public class EntityPetRock extends TameableEntity {
                     stack.shrink(1);
                 }
 
-                if (!this.world.isRemote) {
+                if (this.world.isRemote) {
                     if (this.rand.nextInt(3) == 0) {
                         this.setTamedBy(player);
                         this.navigator.clearPath();
@@ -149,7 +159,7 @@ public class EntityPetRock extends TameableEntity {
     @Nullable
     @Override
     public AgeableEntity createChild(AgeableEntity ageable) {
-        EntityPetRock petRock = new EntityPetRock((PREntitys.petrock), this.world);
+        EntityPetRock petRock = new EntityPetRock((PREntityTypes.PETROCK.get()), this.world);
         UUID uuid = this.getOwnerId();
         if(uuid != null) {
             petRock.setOwnerId(uuid);

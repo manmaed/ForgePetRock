@@ -1,6 +1,6 @@
 package net.manmaed.petrock.items;
 
-import net.manmaed.petrock.entitys.PREntitys;
+import net.manmaed.petrock.entitys.PREntityTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -52,7 +52,7 @@ public class PetRockSpawnEgg extends Item {
                 TileEntity tileentity = world.getTileEntity(blockpos);
                 if (tileentity instanceof MobSpawnerTileEntity) {
                     AbstractSpawner abstractspawner = ((MobSpawnerTileEntity)tileentity).getSpawnerBaseLogic();
-                    abstractspawner.setEntityType(PREntitys.petrock);
+                    abstractspawner.setEntityType(PREntityTypes.PETROCK.get());
                     tileentity.markDirty();
                     world.notifyBlockUpdate(blockpos, blockstate, blockstate, 3);
                     itemstack.shrink(1);
@@ -67,7 +67,7 @@ public class PetRockSpawnEgg extends Item {
                 blockpos1 = blockpos.offset(direction);
             }
 
-            if (PREntitys.petrock.spawn(world, itemstack, context.getPlayer(), blockpos1, SpawnReason.SPAWN_EGG, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP) != null) {
+            if (PREntityTypes.PETROCK.get().spawn(world, itemstack, context.getPlayer(), blockpos1, SpawnReason.SPAWN_EGG, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP) != null) {
                 itemstack.shrink(1);
             }
 
