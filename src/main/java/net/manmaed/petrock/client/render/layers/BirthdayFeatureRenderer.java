@@ -32,7 +32,7 @@ public class BirthdayFeatureRenderer extends LayerRenderer<EntityPetRock, ModelP
             matrixStackIn.push();
             matrixStackIn.translate(0F, -0.5626F, 0F);
             IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEntitySolid(skin));
-            hat.renderCake(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY);
+            hat.renderCake(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.DEFAULT_UV);
             matrixStackIn.pop();
         }
     }

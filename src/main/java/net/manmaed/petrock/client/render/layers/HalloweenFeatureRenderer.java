@@ -32,7 +32,7 @@ public class HalloweenFeatureRenderer extends LayerRenderer<EntityPetRock, Model
             matrixStackIn.push();
             matrixStackIn.translate(0F, -0.5626F, 0F);
             IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEntitySolid(skin));
-            hat.renderCreeper(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY);
+            hat.renderCreeper(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.DEFAULT_UV);
             matrixStackIn.pop();
         }
     }

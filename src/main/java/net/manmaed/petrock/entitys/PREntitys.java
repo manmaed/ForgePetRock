@@ -1,14 +1,5 @@
 package net.manmaed.petrock.entitys;
 
-import net.manmaed.petrock.libs.Refs;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ObjectHolder;
-
 /**
  * Created by manmaed on 26/11/2019.
  */

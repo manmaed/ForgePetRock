@@ -37,7 +37,7 @@ public class SignFeatureRenderer extends LayerRenderer<EntityPetRock, ModelPetRo
             matrixStackIn.translate(-0.3F, 0.78F, -0.5F);
             matrixStackIn.scale(size, size, size);
             IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEntitySolid(skin));
-            hat.renderSign(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY);
+            hat.renderSign(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.DEFAULT_UV);
             matrixStackIn.pop();
         }
     }

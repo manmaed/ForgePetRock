@@ -32,7 +32,7 @@ public class CageFeatureRenderer extends LayerRenderer<EntityPetRock, ModelPetRo
             matrixStackIn.push();
             matrixStackIn.translate(0F, -0.5626F, 0F);
             IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEntitySolid(skin));
-            hat.renderCage(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY);
+            hat.renderCage(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.DEFAULT_UV);
             matrixStackIn.pop();
         }
     }

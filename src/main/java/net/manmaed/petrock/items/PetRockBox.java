@@ -14,6 +14,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.spawner.AbstractSpawner;
 
 import java.util.Objects;
@@ -59,7 +60,7 @@ public class PetRockBox extends Item {
                 blockpos1 = blockpos.offset(direction);
             }
 
-            if (PREntityTypes.PETROCK.get().spawn(world, itemstack, context.getPlayer(), blockpos1, SpawnReason.MOB_SUMMONED, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP) != null) {
+            if (PREntityTypes.PETROCK.get().spawn((ServerWorld)world, itemstack, context.getPlayer(), blockpos1, SpawnReason.MOB_SUMMONED, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP) != null) {
                 itemstack.shrink(1);
             }
 

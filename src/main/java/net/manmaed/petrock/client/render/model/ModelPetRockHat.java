@@ -1,25 +1,34 @@
 package net.manmaed.petrock.client.render.model;
 
+/**
+ * Created by manmaed on 26/02/2017.
+ */
+
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.SegmentedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
- * ModelPetRock - Either Mojang or a mod author
- * Created using Tabula 7.0.0
+ * PetRock - manmaed
+ * Created using Tabula 5.1.0
  */
-public class ModelCakeHat<T extends Entity> extends SegmentedModel<T> {
-    public ModelRenderer cake;
 
-    public ModelCakeHat() {
+@OnlyIn(Dist.CLIENT)
+public class ModelPetRockHat<T extends Entity> extends SegmentedModel<T> {
+    public ModelRenderer shape1;
+
+    public ModelPetRockHat() {
         this.textureWidth = 64;
         this.textureHeight = 32;
-        this.cake = new ModelRenderer(this, 0, 0);
-        this.cake.setRotationPoint(0.0F, 24.0F, 0.0F);
-        this.cake.addCuboid(-4.0F, -3.0F, -4.0F, 8, 3, 8, 0.0F);
+        this.shape1 = new ModelRenderer(this, 0, 0);
+        this.shape1.setRotationPoint(0.0F, 24.0F, 0.0F);
+        this.shape1.addCuboid(-4.5F, -9.0F, -4.5F, 9, 9, 9, 0.0F);
+
     }
 
     @Override
@@ -29,13 +38,11 @@ public class ModelCakeHat<T extends Entity> extends SegmentedModel<T> {
 
     @Override
     public Iterable<ModelRenderer> getParts() {
-        return ImmutableList.of(
-                this.cake
-        );
+        return ImmutableList.of(shape1);
     }
 
-    public void renderCake(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn) {
-        this.cake.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
+    public void renderRock(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn) {
+        this.shape1.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
     }
 
     /**
@@ -45,5 +52,8 @@ public class ModelCakeHat<T extends Entity> extends SegmentedModel<T> {
         model.rotateAngleX  = x;
         model.rotateAngleY  = y;
         model.rotateAngleZ  = z;
+    }
+
+    public void render(MatrixStack matrixStackIn, IVertexBuilder ivertexbuilder, int packedLightIn, int packedOverlayIn) {
     }
 }

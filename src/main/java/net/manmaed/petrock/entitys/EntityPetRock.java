@@ -11,11 +11,15 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -29,6 +33,8 @@ public class EntityPetRock extends TameableEntity {
         super(type, world);
         this.setTamed(false);
     }
+
+    private boolean sitting;
 
     protected void registerGoals()
     {
@@ -51,9 +57,9 @@ public class EntityPetRock extends TameableEntity {
 
 
     public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
-        return MobEntity.func_233666_p_()
-                .func_233815_a_(Attributes.field_233821_d_, 0.25D)
-                .func_233815_a_(Attributes.field_233818_a_, 2.0D);
+        return MobEntity.createMobAttributes()
+                .add(Attributes.GENERIC_MAX_HEALTH, 2.0D)
+                .add(Attributes.GENERIC_MOVEMENT_SPEED, 0.25D);
     }
 
     /*protected void registerAttributes()
@@ -99,17 +105,63 @@ public class EntityPetRock extends TameableEntity {
 
         if (tamed)
         {
-            this.getAttribute(Attributes.field_233818_a_).setBaseValue(20.0D);
+            this.getAttribute(Attributes.GENERIC_MAX_HEALTH).setBaseValue(20.0D);
             this.setHealth(20.0F);
         } else {
-            this.getAttribute(Attributes.field_233818_a_).setBaseValue(1.0D);
+            this.getAttribute(Attributes.GENERIC_MAX_HEALTH).setBaseValue(1.0D);
         }
 
     }
 
-    public ActionResultType func_230254_b_(PlayerEntity player, Hand hand)
-    {
-        ItemStack stack = player.getHeldItem(hand);
+    public void setSitting(boolean sitting) {
+        this.sitting = sitting;
+    }
+
+    @Override
+    public void writeAdditional(CompoundNBT compound) {
+        super.writeAdditional(compound);
+        if (this.getOwnerId() != null) {
+            compound.putUniqueId("Owner", this.getOwnerId());
+        }
+
+        compound.putBoolean("Sitting", this.sitting);
+    }
+
+    /**
+     * (abstract) Protected helper method to read subclass entity data from NBT.
+     */
+    @Override
+    public void readAdditional(CompoundNBT compound) {
+        super.readAdditional(compound);
+        UUID uuid;
+        if (compound.hasUniqueId("Owner")) {
+            uuid = compound.getUniqueId("Owner");
+        } else {
+            String s = compound.getString("Owner");
+            uuid = PreYggdrasilConverter.convertMobOwnerIfNeeded(this.getServer(), s);
+        }
+
+        if (uuid != null) {
+            try {
+                this.setOwnerId(uuid);
+                this.setTamed(true);
+            } catch (Throwable throwable) {
+                this.setTamed(false);
+            }
+        }
+
+        this.sitting = compound.getBoolean("Sitting");
+        this.setSitting(this.sitting);
+    }
+
+    @Override
+    public boolean isBreedingItem(ItemStack stack) {
+        Item item = stack.getItem();
+        return item.getName().equals(PRItems.kibble);
+    }
+
+    public ActionResultType interactMob(PlayerEntity player, Hand hand) {
+    ItemStack stack = player.getHeldItem(hand);
         if(stack.getItem().equals(Items.NAME_TAG)) {
             this.setCustomName(stack.getDisplayName());
         }
@@ -117,7 +169,8 @@ public class EntityPetRock extends TameableEntity {
         {
             if (this.isOwner(player) && !this.world.isRemote && !stack.getItem().equals(PRItems.stoneium) && !stack.getItem().equals(PRItems.kibble))
             {
-                this.func_233687_w_(!this.func_233685_eM_());
+                //this.sit
+                this.setSitting(!this.isSitting());
                 this.isJumping = false;
                 this.navigator.clearPath();
             }
@@ -139,7 +192,7 @@ public class EntityPetRock extends TameableEntity {
                     if (this.rand.nextInt(3) == 0) {
                         this.setTamedBy(player);
                         this.navigator.clearPath();
-                        this.func_233687_w_(true);
+                        this.setSitting(!this.sitting);
                         this.setHealth(20.0F);
                         this.playTameEffect(true);
                         this.world.setEntityState(this, (byte) 7);
@@ -152,13 +205,13 @@ public class EntityPetRock extends TameableEntity {
             }
             return ActionResultType.SUCCESS;
         }
-        return super.func_230254_b_(player, hand);
+        return super.interactMob(player, hand);
     }
 
     //TODO: Entitiy Breading
     @Nullable
     @Override
-    public AgeableEntity createChild(AgeableEntity ageable) {
+    public AgeableEntity createChild(ServerWorld serverWorld, AgeableEntity ageable) {
         EntityPetRock petRock = new EntityPetRock((PREntityTypes.PETROCK.get()), this.world);
         UUID uuid = this.getOwnerId();
         if(uuid != null) {
@@ -180,7 +233,7 @@ public class EntityPetRock extends TameableEntity {
             EntityPetRock petRock = (EntityPetRock)otherAnimal;
             if (!petRock.isTamed()) {
                 return false;
-            } else if (petRock.func_233684_eK_()) {
+            } else if (petRock.isSitting()) {
                 return false;
             } else {
                 return this.isInLove() && petRock.isInLove();

@@ -18,11 +18,11 @@ public class ModelSign<T extends Entity> extends SegmentedModel<T> {
         this.textureHeight = 128;
         this.sign = new ModelRenderer(this, 0, 0);
         this.sign.setRotationPoint(-3.0F, 12.2F, 1.0F);
-        this.sign.addBox(0.0F, 0.0F, 0.0F, 64, 39, 1, 0.0F);
+        this.sign.addCuboid(0.0F, 0.0F, 0.0F, 64, 39, 1, 0.0F);
     }
 
     @Override
-    public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
     }
 
