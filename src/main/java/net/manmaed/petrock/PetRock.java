@@ -6,7 +6,7 @@ import net.manmaed.petrock.command.PRCommands;
 import net.manmaed.petrock.entitys.EntityPetRock;
 import net.manmaed.petrock.entitys.PREntityTypes;
 import net.manmaed.petrock.hats.PRHats;
-import net.manmaed.petrock.hats.PRHats2;
+import net.manmaed.petrock.hats.PRPHats;
 import net.manmaed.petrock.items.PRItems;
 import net.manmaed.petrock.libs.Refs;
 import net.manmaed.petrock.libs.RegisterHandler;
@@ -30,6 +30,24 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
  */
 @Mod(Refs.id)
 public class PetRock {
+
+    /*
+    TODO: PetRock Hat
+    1. Make it sick to head
+    2. Only On Some peoples head (Req. Network Stuff)
+    3. Get List of uuids that the hat should be on (Like how petorcks do event hats)
+     */
+
+    /*
+    TODO: World Gen
+    1. Add World Gen
+    2. ablity to disable worldgen via config ( See Configs to do )
+     */
+
+    /*
+    TODO: Configs
+    1. Add Config for worldgen
+     */
 
     private static RegisterHandler registeryHandler;
     public static String slow_uuid = "d2839efc727a426397ce3c73cdee5013";
@@ -68,12 +86,14 @@ public class PetRock {
         if(Minecraft.getInstance().getSession().getPlayerID().replace("-","").equals(slow_uuid)){
             PRHats.slowisplaying();
         }
+        /*PRPHats.addhattoplayer("2eebcb1af63e4a80b380801a10f88d4e");*/
+        //[17:17:25.191] [Render thread/INFO] [libs.LogHelper/]: [INFO]:-:[PetRock]: PlayerUUID: 2eebcb1af63e4a80b380801a10f88d4e - null
         RenderingRegistry.registerEntityRenderingHandler(PREntityTypes.PETROCK.get(), RenderPetRock::new);
         /*
          * LatvianModder Improved!
          */
         new Thread(PRHats::load).start();
-        new Thread(PRHats2::load).start();
+        /*new Thread(PRPHats::load).start();*/
 
     }
 

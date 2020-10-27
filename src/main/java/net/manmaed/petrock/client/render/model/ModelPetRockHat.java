@@ -41,9 +41,6 @@ public class ModelPetRockHat<T extends Entity> extends SegmentedModel<T> {
         return ImmutableList.of(shape1);
     }
 
-    public void renderRock(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn) {
-        this.shape1.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
-    }
 
     /**
      * This is a helper function from Tabula to set the rotation of model parts
@@ -55,5 +52,6 @@ public class ModelPetRockHat<T extends Entity> extends SegmentedModel<T> {
     }
 
     public void render(MatrixStack matrixStackIn, IVertexBuilder ivertexbuilder, int packedLightIn, int packedOverlayIn) {
+        this.shape1.render(matrixStackIn, ivertexbuilder, packedLightIn, packedOverlayIn);
     }
 }

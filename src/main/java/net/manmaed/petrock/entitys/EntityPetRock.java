@@ -208,7 +208,6 @@ public class EntityPetRock extends TameableEntity {
         return super.interactMob(player, hand);
     }
 
-    //TODO: Entitiy Breading
     @Nullable
     @Override
     public AgeableEntity createChild(ServerWorld serverWorld, AgeableEntity ageable) {
