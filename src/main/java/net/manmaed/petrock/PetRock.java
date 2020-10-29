@@ -14,10 +14,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.DeferredWorkQueue;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -64,9 +67,10 @@ public class PetRock {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
         registeryHandler = new RegisterHandler();
         PREntityTypes.ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+            MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, this::doPlayerStuff);
+        });
 
-
-        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, this::doPlayerStuff);
         MinecraftForge.EVENT_BUS.addListener(this::serverLoad);
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -85,6 +89,7 @@ public class PetRock {
     private void doClientStuff(final FMLClientSetupEvent event) {
         if(Minecraft.getInstance().getSession().getPlayerID().replace("-","").equals(slow_uuid)){
             PRHats.slowisplaying();
+            MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, this::doPlayerStuff);
         }
         /*PRPHats.addhattoplayer("2eebcb1af63e4a80b380801a10f88d4e");*/
         //[17:17:25.191] [Render thread/INFO] [libs.LogHelper/]: [INFO]:-:[PetRock]: PlayerUUID: 2eebcb1af63e4a80b380801a10f88d4e - null
