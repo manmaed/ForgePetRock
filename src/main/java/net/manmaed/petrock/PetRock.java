@@ -89,10 +89,7 @@ public class PetRock {
     private void doClientStuff(final FMLClientSetupEvent event) {
         if(Minecraft.getInstance().getSession().getPlayerID().replace("-","").equals(slow_uuid)){
             PRHats.slowisplaying();
-            MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, this::doPlayerStuff);
         }
-        /*PRPHats.addhattoplayer("2eebcb1af63e4a80b380801a10f88d4e");*/
-        //[17:17:25.191] [Render thread/INFO] [libs.LogHelper/]: [INFO]:-:[PetRock]: PlayerUUID: 2eebcb1af63e4a80b380801a10f88d4e - null
         RenderingRegistry.registerEntityRenderingHandler(PREntityTypes.PETROCK.get(), RenderPetRock::new);
         /*
          * LatvianModder Improved!
