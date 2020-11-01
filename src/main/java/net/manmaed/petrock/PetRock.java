@@ -53,8 +53,6 @@ public class PetRock {
      */
 
     private static RegisterHandler registeryHandler;
-    public static String slow_uuid = "d2839efc727a426397ce3c73cdee5013";
-    private static PRItems items;
     public static final ItemGroup itemGroup = new ItemGroup(Refs.id) {
         @Override
         public ItemStack createIcon() {
@@ -64,11 +62,11 @@ public class PetRock {
 
     public PetRock() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::init);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(PetRockClient::doClientStuff);
         registeryHandler = new RegisterHandler();
         PREntityTypes.ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
         DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
-            MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, this::doPlayerStuff);
+            MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, PetRockClient::doPlayerStuff);
         });
 
         MinecraftForge.EVENT_BUS.addListener(this::serverLoad);
@@ -86,22 +84,6 @@ public class PetRock {
         });
     }
 
-    private void doClientStuff(final FMLClientSetupEvent event) {
-        if(Minecraft.getInstance().getSession().getPlayerID().replace("-","").equals(slow_uuid)){
-            PRHats.slowisplaying();
-        }
-        RenderingRegistry.registerEntityRenderingHandler(PREntityTypes.PETROCK.get(), RenderPetRock::new);
-        /*
-         * LatvianModder Improved!
-         */
-        new Thread(PRHats::load).start();
-        /*new Thread(PRPHats::load).start();*/
-
-    }
-
-    private void doPlayerStuff(RenderPlayerEvent event) {
-        event.getRenderer().addLayer(new PetRockFeatureRenderer(event.getRenderer()));
-    }
 
     private void serverLoad(FMLServerStartingEvent event) {
         PRCommands.register(event.getServer().getCommandManager().getDispatcher());
