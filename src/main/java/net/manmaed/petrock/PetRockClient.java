@@ -28,6 +28,7 @@ public class PetRockClient {
 
     }
 
+    @OnlyIn(Dist.CLIENT)
     public static void doPlayerStuff(RenderPlayerEvent event) {
         event.getRenderer().addLayer(new PetRockFeatureRenderer(event.getRenderer()));
     }
