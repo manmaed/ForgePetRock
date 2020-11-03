@@ -30,8 +30,9 @@ public class PetRockFeatureRenderer extends LayerRenderer<AbstractClientPlayerEn
     @Override
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, AbstractClientPlayerEntity entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEntitySolid(skin));
-        if (true) {
+        if (true && !entity.isInvisible())  {
             matrixStackIn.push();
+            getEntityModel().bipedHead.rotate(matrixStackIn);
             float size = 0.5F;
             matrixStackIn.translate(0.0F, -1.25F, 0.0F);
             matrixStackIn.scale(size, size, size);

@@ -36,9 +36,8 @@ public class PetRock {
 
     /*
     TODO: PetRock Hat
-    1. Make it sick to head
-    2. Only On Some peoples head (Req. Network Stuff)
-    3. Get List of uuids that the hat should be on (Like how petorcks do event hats)
+    1. Only On Some peoples head (Req. Network Stuff)
+    2. Get List of uuids that the hat should be on (Like how petorcks do event hats)
      */
 
     /*
