@@ -3,6 +3,7 @@ package net.manmaed.petrock.hats;
 import com.google.common.base.Charsets;
 import com.google.gson.Gson;
 import net.manmaed.petrock.libs.LogHelper;
+import net.minecraft.client.Minecraft;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -13,11 +14,14 @@ public class PlayerHatData {
     private List<Players> players;
     private String uuid = "";
 
-    public void loadPlayerHatData() {
+    public String PlayerHasHat() {
         for(Players players : players) {
             uuid = players.user.uuid;
-            //PRPHats.addhattoplayer(players.users.uuid);
+            LogHelper.fatal(players.user.username + " - " + players.user.uuid);
+            PRPHats.addhattoplayer(uuid);
+
         }
+        return uuid;
     }
 
     public String getUuid() {

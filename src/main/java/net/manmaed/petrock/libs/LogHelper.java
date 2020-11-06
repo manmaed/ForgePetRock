@@ -24,5 +24,7 @@ public class LogHelper {
     public static void fatal(Object object) {
         log(Level.FATAL, object);
     }
-
+    public static void debug(Object object) {
+        log(Level.FATAL,object);
+    }
 }

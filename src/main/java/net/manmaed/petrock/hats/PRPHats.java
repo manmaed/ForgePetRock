@@ -1,8 +1,6 @@
 package net.manmaed.petrock.hats;
 
-import com.ibm.icu.impl.USerializedSet;
 import net.manmaed.petrock.libs.LogHelper;
-import sun.rmi.runtime.Log;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -13,13 +11,20 @@ public class PRPHats {
     private static String uuid = "";
 
     public static void addhattoplayer(String player_uuid) {
-        playerhats.add(player_uuid);
+        if (!playerhats.contains(player_uuid)) {
+            LogHelper.debug("Adding " + player_uuid + " to ArrayList");
+            playerhats.add(player_uuid);
+        }
+        LogHelper.debug("ArrayList: " + playerhats);
     }
 
     public static boolean playerhashat(String playeruuid) {
+        LogHelper.debug("Given " + playeruuid);
         if (playerhats.contains(playeruuid)) {
+            LogHelper.debug("have hat");
             return true;
         } else {
+            LogHelper.debug("no hat");
             return false;
         }
     }
@@ -29,9 +34,12 @@ public class PRPHats {
         try {
             //playerHatData = playerHatData.getHatData(new URL("https://raw.githubusercontent.com/manmaed/Pet-Rock/master/hats.json"));
             playerHatData = playerHatData.getHatData(new URL("file:///G:/Modding/Forge/1_16_1/PetRock/run/test/players.json"));
+            String hashat = playerHatData.PlayerHasHat();
             uuid = playerHatData.getUuid();
-            addhattoplayer(uuid);
-            LogHelper.fatal("HD: " + uuid);
+            if(!uuid.isEmpty()) {
+                addhattoplayer(uuid.toString());
+            }
+            /*addhattoplayer(uuid);*/
         } catch (Exception e) {
             e.printStackTrace();
         }
