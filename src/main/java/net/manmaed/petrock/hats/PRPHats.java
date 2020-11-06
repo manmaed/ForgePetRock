@@ -1,47 +1,45 @@
 package net.manmaed.petrock.hats;
 
+import com.google.common.base.Charsets;
+import com.google.gson.Gson;
 import net.manmaed.petrock.libs.LogHelper;
+import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class PRPHats {
-    private static List<String> playerhats = new ArrayList<>();
-    private static String uuid = "";
 
-    public static void addHatToPlayer(String player_uuid) {
-        if (!playerhats.contains(player_uuid)) {
-            LogHelper.debug("Adding " + player_uuid + " to ArrayList");
-            playerhats.add(player_uuid);
-        }
-        LogHelper.debug("ArrayList: " + playerhats);
+    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Gson GSON = new Gson();
+
+    private final URL url;
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    private Optional<PlayerHatData> playerHatData;
+
+    public PRPHats(URL url) {
+        this.url = url;
+        playerHatData = Optional.empty();
     }
 
-    public static boolean playerHasHat(String playeruuid) {
-        LogHelper.debug("Given " + playeruuid);
-        if (playerhats.contains(playeruuid)) {
-            LogHelper.debug("have hat");
-            return true;
-        } else {
-            LogHelper.debug("no hat");
-            return false;
-        }
-    }
-
-    public static void load() {
-        PlayerHatData playerHatData = null;
+    public void load() {
         try {
-            //playerHatData = playerHatData.getHatData(new URL("https://raw.githubusercontent.com/manmaed/Pet-Rock/master/hats.json"));
-            playerHatData = playerHatData.getHatData(new URL("file:///G:/Modding/Forge/1_16_1/PetRock/run/test/players.json"));
-            String hashat = playerHatData.PlayerHasHat();
-            uuid = playerHatData.getUuid();
-            if(!uuid.isEmpty()) {
-                addHatToPlayer(uuid.toString());
-            }
-            /*addhattoplayer(uuid);*/
-        } catch (Exception e) {
-            e.printStackTrace();
+            String jsonString = IOUtils.toString(url, Charsets.UTF_8);
+            playerHatData = Optional.ofNullable(GSON.fromJson(jsonString, PlayerHatData.class));
+        } catch (IOException e) {
+            LOGGER.error("There was an error getting player hat data", e);
         }
+    }
+
+    public boolean doesPlayerHaveHat(UUID uuid) {
+        return playerHatData.map(playerHatData1 -> playerHatData1.getPlayers().stream().findFirst()
+                .filter(player -> player.getUser().getUuid().equals(uuid)).isPresent())
+                .orElse(false);
     }
 }

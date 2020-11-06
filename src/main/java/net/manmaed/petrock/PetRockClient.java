@@ -12,9 +12,13 @@ import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class PetRockClient {
 
     public static String slow_uuid = "d2839efc727a426397ce3c73cdee5013";
+    public static final PRPHats HATS = new PRPHats(getURL("https://pastebin.com/raw/RXu1Cwki"));
 
     public static void doClientStuff(final FMLClientSetupEvent event) {
         if(Minecraft.getInstance().getSession().getPlayerID().replace("-","").equals(slow_uuid)){
@@ -24,13 +28,23 @@ public class PetRockClient {
         /*
          * LatvianModder Improved!
          */
+
         new Thread(PRHats::load).start();
-        new Thread(PRPHats::load).start();
+        new Thread(HATS::load).start();
 
     }
 
     @OnlyIn(Dist.CLIENT)
     public static void doPlayerStuff(RenderPlayerEvent event) {
         event.getRenderer().addLayer(new PetRockFeatureRenderer(event.getRenderer()));
+    }
+
+
+    public static URL getURL(String url) {
+        try {
+            return new URL(url);
+        } catch (MalformedURLException e) {
+            return null;
+        }
     }
 }

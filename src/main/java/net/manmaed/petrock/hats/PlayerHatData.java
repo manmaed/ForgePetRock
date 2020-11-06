@@ -5,45 +5,42 @@ import com.google.gson.Gson;
 import net.manmaed.petrock.libs.LogHelper;
 import net.minecraft.client.Minecraft;
 import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.UUID;
 
 public class PlayerHatData {
+
     private List<Players> players;
-    private String uuid = "";
 
-    public String PlayerHasHat() {
-        for(Players players : players) {
-            uuid = players.user.uuid;
-            LogHelper.fatal(players.user.username + " - " + players.user.uuid);
-            PRPHats.addHatToPlayer(uuid);
-
-        }
-        return uuid;
+    public List<Players> getPlayers() {
+        return players;
     }
 
-    public String getUuid() {
-        return uuid;
-    }
-
-    private class Players {
+    public static class Players {
         private User user;
-    }
-    private class User {
-        private String username;
-        private String uuid;
 
-    }
-
-    public static PlayerHatData getHatData(URL url) {
-        try {
-            String jsonString = IOUtils.toString(url, Charsets.UTF_8);
-            return new Gson().fromJson(jsonString, PlayerHatData.class);
-        } catch (IOException e) {
-            e.printStackTrace();
+        public User getUser() {
+            return user;
         }
-        return null;
     }
+
+    public static class User {
+        private String username;
+        private UUID uuid;
+
+        public String getUsername() {
+            return username;
+        }
+
+        public UUID getUuid() {
+            return uuid;
+        }
+    }
+
+
 }

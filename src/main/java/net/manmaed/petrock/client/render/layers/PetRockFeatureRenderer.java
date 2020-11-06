@@ -2,6 +2,8 @@ package net.manmaed.petrock.client.render.layers;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.manmaed.petrock.PetRock;
+import net.manmaed.petrock.PetRockClient;
 import net.manmaed.petrock.client.render.model.ModelPetRockHat;
 import net.manmaed.petrock.hats.PRPHats;
 import net.manmaed.petrock.hats.PlayerHatData;
@@ -30,10 +32,8 @@ public class PetRockFeatureRenderer extends LayerRenderer<AbstractClientPlayerEn
 
     @Override
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, AbstractClientPlayerEntity entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-
         if (!entity.isInvisible())  {
-            String entityuuid = entity.getEntity().getUniqueID().toString().replace("-", "");
-            if (PRPHats.playerHasHat(entityuuid)) {
+            if (PetRockClient.HATS.doesPlayerHaveHat(entity.getUniqueID())) {
                 IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEntitySolid(skin));
                 matrixStackIn.push();
                 getEntityModel().bipedHead.rotate(matrixStackIn);
