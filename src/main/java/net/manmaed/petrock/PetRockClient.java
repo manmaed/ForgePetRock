@@ -18,7 +18,7 @@ import java.net.URL;
 public class PetRockClient {
 
     public static String slow_uuid = "d2839efc727a426397ce3c73cdee5013";
-    public static final PRPHats HATS = new PRPHats(getURL("https://pastebin.com/raw/RXu1Cwki"));
+    public static final PRPHats HATS = new PRPHats();
 
     public static void doClientStuff(final FMLClientSetupEvent event) {
         if(Minecraft.getInstance().getSession().getPlayerID().replace("-","").equals(slow_uuid)){
@@ -40,11 +40,5 @@ public class PetRockClient {
     }
 
 
-    public static URL getURL(String url) {
-        try {
-            return new URL(url);
-        } catch (MalformedURLException e) {
-            return null;
-        }
-    }
+
 }
