@@ -18,7 +18,7 @@ public class PlayerHatData {
         for(Players players : players) {
             uuid = players.user.uuid;
             LogHelper.fatal(players.user.username + " - " + players.user.uuid);
-            PRPHats.addhattoplayer(uuid);
+            PRPHats.addHatToPlayer(uuid);
 
         }
         return uuid;

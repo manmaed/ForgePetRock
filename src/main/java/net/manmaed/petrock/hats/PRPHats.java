@@ -10,7 +10,7 @@ public class PRPHats {
     private static List<String> playerhats = new ArrayList<>();
     private static String uuid = "";
 
-    public static void addhattoplayer(String player_uuid) {
+    public static void addHatToPlayer(String player_uuid) {
         if (!playerhats.contains(player_uuid)) {
             LogHelper.debug("Adding " + player_uuid + " to ArrayList");
             playerhats.add(player_uuid);
@@ -18,7 +18,7 @@ public class PRPHats {
         LogHelper.debug("ArrayList: " + playerhats);
     }
 
-    public static boolean playerhashat(String playeruuid) {
+    public static boolean playerHasHat(String playeruuid) {
         LogHelper.debug("Given " + playeruuid);
         if (playerhats.contains(playeruuid)) {
             LogHelper.debug("have hat");
@@ -37,7 +37,7 @@ public class PRPHats {
             String hashat = playerHatData.PlayerHasHat();
             uuid = playerHatData.getUuid();
             if(!uuid.isEmpty()) {
-                addhattoplayer(uuid.toString());
+                addHatToPlayer(uuid.toString());
             }
             /*addhattoplayer(uuid);*/
         } catch (Exception e) {
