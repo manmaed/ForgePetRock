@@ -18,7 +18,7 @@ import java.net.URL;
 public class PetRockClient {
 
     public static String slow_uuid = "d2839efc727a426397ce3c73cdee5013";
-    public static final PRPHats HATS = new PRPHats();
+    public static final PRPHats Player_Hats = new PRPHats();
 
     public static void doClientStuff(final FMLClientSetupEvent event) {
         if(Minecraft.getInstance().getSession().getPlayerID().replace("-","").equals(slow_uuid)){
@@ -30,7 +30,7 @@ public class PetRockClient {
          */
 
         new Thread(PRHats::load).start();
-        new Thread(HATS::load).start();
+        new Thread(Player_Hats::load).start();
 
     }
 

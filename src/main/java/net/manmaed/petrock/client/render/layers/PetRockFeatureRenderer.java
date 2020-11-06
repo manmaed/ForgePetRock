@@ -7,6 +7,7 @@ import net.manmaed.petrock.PetRockClient;
 import net.manmaed.petrock.client.render.model.ModelPetRockHat;
 import net.manmaed.petrock.hats.PRPHats;
 import net.manmaed.petrock.hats.PlayerHatData;
+import net.manmaed.petrock.libs.LogHelper;
 import net.manmaed.petrock.libs.Refs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
@@ -17,6 +18,8 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3f;
 
 import java.util.List;
 
@@ -33,7 +36,7 @@ public class PetRockFeatureRenderer extends LayerRenderer<AbstractClientPlayerEn
     @Override
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, AbstractClientPlayerEntity entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (!entity.isInvisible())  {
-            if (PetRockClient.HATS.doesPlayerHaveHat(entity.getUniqueID())) {
+            if (PetRockClient.Player_Hats.doesPlayerHaveHat(entity.getUniqueID())) {
                 IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEntitySolid(skin));
                 matrixStackIn.push();
                 getEntityModel().bipedHead.rotate(matrixStackIn);

@@ -17,9 +17,10 @@ import java.util.UUID;
 
 public class PRPHats {
 
-    private static final Logger LOGGER = LogManager.getLogger();
     private static final Gson GSON = new Gson();
-    private static final URL url = getURL("https://pastebin.com/raw/RXu1Cwki");
+    private static final URL url = getURL("https://raw.githubusercontent.com/manmaed/Pet-Rock/master/players.json");
+    //Below is Testing URL
+    //private static final URL url = getURL("file:///G:/Modding/PetRockFIles/Pet-Rock/players.json");
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     private Optional<PlayerHatData> playerHatData = Optional.empty();
@@ -29,7 +30,7 @@ public class PRPHats {
             String jsonString = IOUtils.toString(url, Charsets.UTF_8);
             playerHatData = Optional.ofNullable(GSON.fromJson(jsonString, PlayerHatData.class));
         } catch (IOException e) {
-            LOGGER.error("There was an error getting player hat data", e);
+            LogHelper.warn("There was an error getting player hat data. " + e);
         }
     }
 

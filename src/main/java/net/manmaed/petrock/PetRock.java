@@ -35,12 +35,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 public class PetRock {
 
     /*
-    TODO: PetRock Hat
-    1. Only On Some peoples head (Req. Network Stuff)
-    2. Get List of uuids that the hat should be on (Like how petorcks do event hats)
-     */
-
-    /*
     TODO: World Gen
     1. Add World Gen
     2. ablity to disable worldgen via config ( See Configs to do )
