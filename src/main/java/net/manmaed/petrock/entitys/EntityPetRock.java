@@ -1,6 +1,7 @@
 package net.manmaed.petrock.entitys;
 
 import net.manmaed.petrock.items.PRItems;
+import net.manmaed.petrock.libs.LogHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
@@ -162,48 +163,52 @@ public class EntityPetRock extends TameableEntity {
 
     public ActionResultType interactMob(PlayerEntity player, Hand hand) {
     ItemStack stack = player.getHeldItem(hand);
+        LogHelper.fatal(isOwner(player) + " - " + world.isRemote());
         if(stack.getItem().equals(Items.NAME_TAG)) {
             this.setCustomName(stack.getDisplayName());
         }
-        if (this.isTamed())
-        {
-            if (this.isOwner(player) && !this.world.isRemote && !stack.getItem().equals(PRItems.stoneium) && !stack.getItem().equals(PRItems.kibble))
-            {
-                //this.sit
-                this.setSitting(!this.isSitting());
-                this.isJumping = false;
-                this.navigator.clearPath();
-            }
-            if(stack.getItem() == PRItems.kibble && getHealth() < 20.0F) {
-                if (!player.abilities.isCreativeMode) {
-                    stack.shrink(1);
+        if (this.isTamed()) {
+            if (this.isOwner(player) && !world.isRemote()) {
+                LogHelper.fatal(isOwner(player) + " - " + world.isRemote());
+                if (stack.getItem() == PRItems.kibble && getHealth() < 20.0F) {
+                    if (!player.abilities.isCreativeMode) {
+                        stack.shrink(1);
+                    }
+                    this.heal(3.0F);
+                    return ActionResultType.SUCCESS;
+                } else {
+                    LogHelper.fatal(this.isSitting());
+                    setSitting(!this.isSitting());
+                    isJumping = false;
+                    navigator.clearPath();
+                    return ActionResultType.SUCCESS;
                 }
-                this.heal(3.0F);
-                return ActionResultType.SUCCESS;
             }
         }
-        else if (!this.isTamed()) {
+        else if (!isTamed()) {
             if (stack.getItem() == PRItems.stoneium ){
                 if (!player.abilities.isCreativeMode) {
                     stack.shrink(1);
                 }
 
-                if (this.world.isRemote) {
-                    if (this.rand.nextInt(3) == 0) {
-                        this.setTamedBy(player);
-                        this.navigator.clearPath();
-                        this.setSitting(!this.sitting);
-                        this.setHealth(20.0F);
-                        this.playTameEffect(true);
-                        this.world.setEntityState(this, (byte) 7);
+                if (world.isRemote()) {
+                    if (rand.nextInt(3) == 0) {
+                        setTamedBy(player);
+                        navigator.clearPath();
+                        setSitting(true);
+                        setHealth(20.0F);
+                        playTameEffect(true);
+                        world.setEntityState(this, (byte) 7);
+                        return ActionResultType.PASS;
                     } else {
-                        this.playTameEffect(false);
-                        this.world.setEntityState(this, (byte) 6);
+                        playTameEffect(false);
+                        world.setEntityState(this, (byte) 6);
+                        return ActionResultType.PASS;
                     }
                 }
 
             }
-            return ActionResultType.SUCCESS;
+            return ActionResultType.FAIL;
         }
         return super.interactMob(player, hand);
     }
