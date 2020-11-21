@@ -1,8 +1,10 @@
 package net.manmaed.petrock;
 
+import net.manmaed.petrock.blocks.PRBlocks;
 import net.manmaed.petrock.client.render.entity.RenderPetRock;
 import net.manmaed.petrock.client.render.layers.PetRockFeatureRenderer;
 import net.manmaed.petrock.command.PRCommands;
+import net.manmaed.petrock.config.PRConfig;
 import net.manmaed.petrock.entitys.EntityPetRock;
 import net.manmaed.petrock.entitys.PREntityTypes;
 import net.manmaed.petrock.hats.PRHats;
@@ -10,6 +12,7 @@ import net.manmaed.petrock.hats.PRPHats;
 import net.manmaed.petrock.items.PRItems;
 import net.manmaed.petrock.libs.Refs;
 import net.manmaed.petrock.libs.RegisterHandler;
+import net.manmaed.petrock.worldgen.WorldGenHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.item.ItemGroup;
@@ -19,10 +22,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
@@ -60,6 +66,9 @@ public class PetRock {
     };
 
     public PetRock() {
+        IEventBus event = FMLJavaModLoadingContext.get().getModEventBus();
+        PRBlocks.FEATURES.register(event);
+
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::init);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(PetRockClient::doClientStuff);
         registeryHandler = new RegisterHandler();
@@ -67,9 +76,11 @@ public class PetRock {
         DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
             MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, PetRockClient::doPlayerStuff);
         });
-
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, PRConfig.COMMON_CONFIG);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, PRConfig.CLIENT_CONFIG);
         MinecraftForge.EVENT_BUS.addListener(this::serverLoad);
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, WorldGenHandler::addStuffToBiomes);
     }
 
     public static RegisterHandler getRegisteryHandler() {
@@ -80,6 +91,9 @@ public class PetRock {
         // some preinit code;
         DeferredWorkQueue.runLater(() -> {
             GlobalEntityTypeAttributes.put(PREntityTypes.PETROCK.get(), EntityPetRock.setCustomAttributes().build());
+        });
+        event.enqueueWork(() -> {
+            WorldGenHandler.registerConfiguredFeatures();
         });
     }
 

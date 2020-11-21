@@ -2,9 +2,15 @@ package net.manmaed.petrock.blocks;
 
 import net.manmaed.petrock.PetRock;
 import net.manmaed.petrock.libs.Refs;
+import net.manmaed.petrock.worldgen.StoneiumOreFeature;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
 
 /**
@@ -27,4 +33,6 @@ public class PRBlocks {
         PetRock.getRegisteryHandler().registerBlock(stoneiumblock);
 
     }
+    public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, Refs.id);
+    public static final RegistryObject<Feature<OreFeatureConfig>> STONEIUMOREFEATURES = FEATURES.register("stoneiumfeature", () -> new StoneiumOreFeature(OreFeatureConfig.CODEC));
 }
