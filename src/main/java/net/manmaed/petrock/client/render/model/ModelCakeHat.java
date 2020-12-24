@@ -19,11 +19,11 @@ public class ModelCakeHat<T extends Entity> extends SegmentedModel<T> {
         this.textureHeight = 32;
         this.cake = new ModelRenderer(this, 0, 0);
         this.cake.setRotationPoint(0.0F, 24.0F, 0.0F);
-        this.cake.addCuboid(-4.0F, -3.0F, -4.0F, 8, 3, 8, 0.0F);
+        this.cake.addBox(-4.0F, -3.0F, -4.0F, 8, 3, 8, 0.0F);
     }
 
     @Override
-    public void setAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
     }
 

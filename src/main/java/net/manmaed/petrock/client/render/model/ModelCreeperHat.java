@@ -25,26 +25,26 @@ public class ModelCreeperHat<T extends Entity> extends SegmentedModel<T> {
         this.textureHeight = 32;
         this.foot2F = new ModelRenderer(this, 0, 20);
         this.foot2F.setRotationPoint(1.5F, 24.0F, -1.0F);
-        this.foot2F.addCuboid(-1.0F, -2.0F, -1.0F, 2, 2, 2, 0.0F);
+        this.foot2F.addBox(-1.0F, -2.0F, -1.0F, 2, 2, 2, 0.0F);
         this.foot1B = new ModelRenderer(this, 0, 20);
         this.foot1B.setRotationPoint(-1.5F, 24.0F, 1.5F);
-        this.foot1B.addCuboid(-1.0F, -2.0F, -1.0F, 2, 2, 2, 0.0F);
+        this.foot1B.addBox(-1.0F, -2.0F, -1.0F, 2, 2, 2, 0.0F);
         this.foot2B = new ModelRenderer(this, 0, 20);
         this.foot2B.setRotationPoint(1.5F, 24.0F, 1.5F);
-        this.foot2B.addCuboid(-1.0F, -2.0F, -1.0F, 2, 2, 2, 0.0F);
+        this.foot2B.addBox(-1.0F, -2.0F, -1.0F, 2, 2, 2, 0.0F);
         this.CreepsHead = new ModelRenderer(this, 0, 0);
         this.CreepsHead.setRotationPoint(0.0F, 18.0F, 0.0F);
-        this.CreepsHead.addCuboid(-3.0F, -6.0F, -3.0F, 6, 6, 6, 0.0F);
+        this.CreepsHead.addBox(-3.0F, -6.0F, -3.0F, 6, 6, 6, 0.0F);
         this.foot1F = new ModelRenderer(this, 0, 20);
         this.foot1F.setRotationPoint(-1.5F, 24.0F, -1.0F);
-        this.foot1F.addCuboid(-1.0F, -2.0F, -1.0F, 2, 2, 2, 0.0F);
+        this.foot1F.addBox(-1.0F, -2.0F, -1.0F, 2, 2, 2, 0.0F);
         this.CreepsBody = new ModelRenderer(this, 0, 13);
         this.CreepsBody.setRotationPoint(0.0F, 22.0F, 0.0F);
-        this.CreepsBody.addCuboid(-1.5F, -4.0F, -1.0F, 3, 4, 2, 0.0F);
+        this.CreepsBody.addBox(-1.5F, -4.0F, -1.0F, 3, 4, 2, 0.0F);
     }
 
     @Override
-    public void setAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
     }
 

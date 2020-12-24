@@ -25,34 +25,34 @@ public class ModelSlowpokeHat<T extends Entity> extends SegmentedModel<T> {
         this.textureHeight = 32;
         this.Shape1_1 = new ModelRenderer(this, 32, 1);
         this.Shape1_1.setRotationPoint(0.0F, -1.0F, 0.0F);
-        this.Shape1_1.addCuboid(-1.5F, 10.0F, -1.5F, 2, 4, 3, 0.0F);
+        this.Shape1_1.addBox(-1.5F, 10.0F, -1.5F, 2, 4, 3, 0.0F);
         this.setRotateAngle(Shape1_1, 3.141592653589793F, 1.5707963267948966F, 3.141592653589793F);
         this.Shape1_5 = new ModelRenderer(this, 0, 0);
         this.Shape1_5.setRotationPoint(0.0F, -1.0F, 0.0F);
-        this.Shape1_5.addCuboid(-4.0F, 2.0F, -3.5F, 8, 8, 8, 0.0F);
+        this.Shape1_5.addBox(-4.0F, 2.0F, -3.5F, 8, 8, 8, 0.0F);
         this.Shape1_2 = new ModelRenderer(this, 32, 8);
         this.Shape1_2.setRotationPoint(0.0F, 3.0F, 0.0F);
-        this.Shape1_2.addCuboid(-1.0F, 10.0F, 0.0F, 4, 2, 2, 0.0F);
+        this.Shape1_2.addBox(-1.0F, 10.0F, 0.0F, 4, 2, 2, 0.0F);
         this.setRotateAngle(Shape1_2, -0.017453292519943295F, 1.3962634015954636F, 0.0F);
         this.Shape1_4 = new ModelRenderer(this, 32, 8);
         this.Shape1_4.setRotationPoint(0.0F, 3.0F, 0.0F);
-        this.Shape1_4.addCuboid(-1.0F, 10.0F, -2.0F, 4, 2, 2, 0.0F);
+        this.Shape1_4.addBox(-1.0F, 10.0F, -2.0F, 4, 2, 2, 0.0F);
         this.setRotateAngle(Shape1_4, 3.141592653589793F, 1.3962634015954636F, 3.141592653589793F);
         this.Shape1 = new ModelRenderer(this, 0, 16);
         this.Shape1.setRotationPoint(0.0F, -1.0F, 0.0F);
-        this.Shape1.addCuboid(-1.5F, 10.0F, 1.5F, 2, 4, 2, 0.0F);
+        this.Shape1.addBox(-1.5F, 10.0F, 1.5F, 2, 4, 2, 0.0F);
         this.setRotateAngle(Shape1, 3.141592653589793F, 1.5707963267948966F, 3.141592653589793F);
         this.head2 = new ModelRenderer(this, 0, 16);
         this.head2.setRotationPoint(0.0F, -1.0F, 0.0F);
-        this.head2.addCuboid(-4.0F, 2.0F, -3.5F, 8, 8, 8, 0.1F);
+        this.head2.addBox(-4.0F, 2.0F, -3.5F, 8, 8, 8, 0.1F);
         this.Shape1_3 = new ModelRenderer(this, 0, 16);
         this.Shape1_3.setRotationPoint(0.0F, -1.0F, 0.0F);
-        this.Shape1_3.addCuboid(-1.5F, 10.0F, -3.5F, 2, 4, 2, 0.0F);
+        this.Shape1_3.addBox(-1.5F, 10.0F, -3.5F, 2, 4, 2, 0.0F);
         this.setRotateAngle(Shape1_3, 3.141592653589793F, 1.5707963267948966F, 3.141592653589793F);
     }
 
     @Override
-    public void setAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
     }
 

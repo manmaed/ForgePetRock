@@ -1,11 +1,9 @@
 package net.manmaed.petrock.entitys;
 
 import net.manmaed.petrock.items.PRItems;
-import net.manmaed.petrock.libs.LogHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -13,15 +11,8 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -29,69 +20,16 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nullable;
-import java.util.Optional;
 import java.util.UUID;
 
 /**
  * Created by manmaed on 30/08/2019.
  */
-public class EntityPetRock extends TameableEntity {
-    protected static final DataParameter<Byte> TAMED = EntityDataManager.createKey(EntityPetRock.class, DataSerializers.BYTE);
-    protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.createKey(EntityPetRock.class, DataSerializers.OPTIONAL_UNIQUE_ID);
-    private boolean sitting;
+public class OldEntityPetRock extends TameableEntity {
 
-    public EntityPetRock(EntityType<? extends EntityPetRock> type, World world) {
+    public OldEntityPetRock(EntityType<? extends OldEntityPetRock> type, World world) {
         super(type, world);
         this.setTamed(false);
-    }
-    @Override
-    public void writeAdditional(CompoundNBT compound) {
-        super.writeAdditional(compound);
-        if (this.getOwnerId() != null) {
-            compound.putUniqueId("Owner", this.getOwnerId());
-        }
-
-        compound.putBoolean("Sitting", this.sitting);
-    }
-
-    @Override
-    public void readAdditional(CompoundNBT compound) {
-        super.readAdditional(compound);
-        UUID uuid;
-        if (compound.hasUniqueId("Owner")) {
-            uuid = compound.getUniqueId("Owner");
-        } else {
-            String s = compound.getString("Owner");
-            uuid = PreYggdrasilConverter.convertMobOwnerIfNeeded(this.getServer(), s);
-        }
-
-        if (uuid != null) {
-            try {
-                this.setOwnerId(uuid);
-                this.setTamed(true);
-            } catch (Throwable throwable) {
-                this.setTamed(false);
-            }
-        }
-
-        this.sitting = compound.getBoolean("Sitting");
-        this.setSleeping(this.sitting);
-    }
-
-    @Override
-    protected void registerData() {
-        super.registerData();
-        this.dataManager.register(TAMED, (byte)0);
-        this.dataManager.register(OWNER_UNIQUE_ID, Optional.empty());
-    }
-
-    @Override
-    public boolean isSitting() {
-        return this.sitting;
-    }
-
-    public void setSitting(boolean sitbol) {
-        this.sitting = sitbol;
     }
 
     protected void registerGoals()
@@ -108,6 +46,10 @@ public class EntityPetRock extends TameableEntity {
 
     }
 
+    @Override
+    protected void registerData() {
+        super.registerData();
+    }
 
 
     public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
@@ -189,20 +131,6 @@ public class EntityPetRock extends TameableEntity {
                     this.heal(3.0F);
                     return ActionResultType.SUCCESS;
                 }
-                if(!(item instanceof DyeItem)) {
-                    ActionResultType actionresulttype = super.func_230254_b_(player, hand);
-                    if ((!actionresulttype.isSuccessOrConsume() || this.isChild()) && this.isOwner(player)) {
-                        if(this.isSitting()) {
-                            this.setSitting(false);
-                        } else {
-                            this.setSitting(true);
-                        }
-                        this.isJumping = false;
-                        this.navigator.clearPath();
-                        return ActionResultType.SUCCESS;
-                    }
-                    return  actionresulttype;
-                }
             } else if(item == PRItems.stoneium) {
                 if(player.abilities.isCreativeMode) {
                     itemStack.shrink(1);
@@ -277,14 +205,15 @@ public class EntityPetRock extends TameableEntity {
     @Nullable
     @Override
     public AgeableEntity func_241840_a(ServerWorld serverWorld, AgeableEntity ageable) {
-        EntityPetRock petRock = new EntityPetRock((PREntityTypes.PETROCK.get()), this.world);
+        /*OldEntityPetRock petRock = new OldEntityPetRock((PREntityTypes.PETROCK.get()), this.world);
         UUID uuid = this.getOwnerId();
         if(uuid != null) {
             petRock.setOwnerId(uuid);
             petRock.setTamed(true);
 
         }
-        return petRock;
+        return petRock;*/
+        return null;
     }
 
     public boolean canMateWith(AnimalEntity otherAnimal) {
@@ -292,10 +221,10 @@ public class EntityPetRock extends TameableEntity {
             return false;
         } else if (!this.isTamed()) {
             return false;
-        } else if (!(otherAnimal instanceof EntityPetRock)) {
+        } else if (!(otherAnimal instanceof OldEntityPetRock)) {
             return false;
         } else {
-            EntityPetRock petRock = (EntityPetRock)otherAnimal;
+            OldEntityPetRock petRock = (OldEntityPetRock)otherAnimal;
             if (!petRock.isTamed()) {
                 return false;
             } else if (petRock.isSitting()) {

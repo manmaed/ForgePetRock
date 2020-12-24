@@ -57,7 +57,7 @@ public class SlowpokeFeatureRenderer extends LayerRenderer<EntityPetRock, ModelP
                 matrixStackIn.translate(0F, -0.005F, 0F);
             }
             IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEntityCutout(skin));
-            hat.renderSlowpoke(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.DEFAULT_UV);
+            hat.renderSlowpoke(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY);
             matrixStackIn.pop();
         }
     }

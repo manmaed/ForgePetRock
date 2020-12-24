@@ -36,11 +36,11 @@ public class PetRockFeatureRenderer extends LayerRenderer<AbstractClientPlayerEn
             if (PRPHats.playerHasHat(entityuuid)) {
                 IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEntitySolid(skin));
                 matrixStackIn.push();
-                getEntityModel().bipedHead.rotate(matrixStackIn);
+                getEntityModel().bipedHead.translateRotate(matrixStackIn);
                 float size = 0.5F;
                 matrixStackIn.translate(0.0F, -1.25F, 0.0F);
                 matrixStackIn.scale(size, size, size);
-                hat.render(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.DEFAULT_UV);
+                hat.render(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY);
                 matrixStackIn.pop();
             }
         }

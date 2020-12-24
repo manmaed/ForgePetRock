@@ -24,17 +24,17 @@ public class WorldGenHandler {
         Registry<ConfiguredFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_FEATURE;
 
         PR_UNDERGROUND = PRBlocks.STONEIUMOREFEATURES.get()
-                .configure(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, PRBlocks.stoneiumore.getDefaultState(), PRConfig.STONEIUM_ORE_VAIN_SIZE.get()))
-                .decorate(Placement.RANGE.configure(new TopSolidRangeConfig(PRConfig.STONEIUM_ORE_YMIN.get(), PRConfig.STONEIUM_ORE_YMIN.get(), PRConfig.STONEIUM_ORE_YMAX.get())))
-                .applyChance(PRConfig.STONEIUM_ORE_CHANCE.get());
+                .withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, PRBlocks.stoneiumore.getDefaultState(), PRConfig.STONEIUM_ORE_VAIN_SIZE.get()))
+                .withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(PRConfig.STONEIUM_ORE_YMIN.get(), PRConfig.STONEIUM_ORE_YMIN.get(), PRConfig.STONEIUM_ORE_YMAX.get())))
+                .chance(PRConfig.STONEIUM_ORE_CHANCE.get());
         Registry.register(registry, new ResourceLocation(Refs.id,"stoneium_gen_underground"), PR_UNDERGROUND);
     }
 
     public static void addStuffToBiomes(BiomeLoadingEvent event) {
-        RegistryKey<Biome> biome = RegistryKey.of(Registry.BIOME_KEY, event.getName());
+        RegistryKey<Biome> biome = RegistryKey.getOrCreateKey(Registry.BIOME_KEY, event.getName());
         if (PRConfig.ENABLE_WORLD_GEN.get()) {
             if (!BiomeDictionary.hasType(biome, BiomeDictionary.Type.VOID) && isValidBiome(event.getCategory())) {
-                event.getGeneration().feature(GenerationStage.Decoration.UNDERGROUND_ORES, PR_UNDERGROUND).build();
+                event.getGeneration().withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, PR_UNDERGROUND).build();
             }
         }
     }

@@ -38,7 +38,7 @@ public class ChristmasFeatureRenderer extends LayerRenderer<EntityPetRock, Model
                 matrixStackIn.translate(0F, -0.5626F, 0F);
             }
             IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEntitySolid(skin));
-            hat.renderSanta(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.DEFAULT_UV);
+            hat.renderSanta(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY);
             matrixStackIn.pop();
         }
     }

@@ -27,12 +27,12 @@ public class ModelPetRockHat<T extends Entity> extends SegmentedModel<T> {
         this.textureHeight = 32;
         this.shape1 = new ModelRenderer(this, 0, 0);
         this.shape1.setRotationPoint(0.0F, 24.0F, 0.0F);
-        this.shape1.addCuboid(-4.5F, -9.0F, -4.5F, 9, 9, 9, 0.0F);
+        this.shape1.addBox(-4.5F, -9.0F, -4.5F, 9, 9, 9, 0.0F);
 
     }
 
     @Override
-    public void setAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
     }
 

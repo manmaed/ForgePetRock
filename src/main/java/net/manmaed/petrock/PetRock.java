@@ -90,11 +90,9 @@ public class PetRock {
     private void init(final FMLCommonSetupEvent event) {
         // some preinit code;
         DeferredWorkQueue.runLater(() -> {
-            GlobalEntityTypeAttributes.put(PREntityTypes.PETROCK.get(), EntityPetRock.setCustomAttributes().build());
+            GlobalEntityTypeAttributes.put(PREntityTypes.PETROCK.get(), EntityPetRock.setCustomAttributes().create());
         });
-        event.enqueueWork(() -> {
-            WorldGenHandler.registerConfiguredFeatures();
-        });
+        event.enqueueWork(WorldGenHandler::registerConfiguredFeatures);
     }
 
 

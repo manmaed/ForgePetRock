@@ -4,6 +4,7 @@ package net.manmaed.petrock.client.render.entity;
 import net.manmaed.petrock.client.render.layers.*;
 import net.manmaed.petrock.client.render.model.ModelPetRock;
 import net.manmaed.petrock.entitys.EntityPetRock;
+import net.manmaed.petrock.libs.LogHelper;
 import net.manmaed.petrock.libs.Refs;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -30,11 +31,15 @@ public class RenderPetRock extends MobRenderer<EntityPetRock, ModelPetRock<Entit
 
     @Override
     public ResourceLocation getEntityTexture(EntityPetRock entityPetRock) {
-        if(entityPetRock.isSitting()) {
-            return skintamesit;
-        }
         if(entityPetRock.isTamed()) {
-            return skintame;
+            LogHelper.warn(entityPetRock.isSitting());
+            if (entityPetRock.isSitting()) {
+                LogHelper.warn("Sit");
+                return skintamesit;
+            } else {
+                LogHelper.warn("Stand");
+                return skintame;
+            }
         }
         else {
             return skinuntame;
