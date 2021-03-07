@@ -32,12 +32,9 @@ public class RenderPetRock extends MobRenderer<EntityPetRock, ModelPetRock<Entit
     @Override
     public ResourceLocation getEntityTexture(EntityPetRock entityPetRock) {
         if(entityPetRock.isTamed()) {
-            LogHelper.warn(entityPetRock.isSitting());
-            if (entityPetRock.isSitting()) {
-                LogHelper.warn("Sit");
+            if (entityPetRock.isEntitySleeping() ) {
                 return skintamesit;
             } else {
-                LogHelper.warn("Stand");
                 return skintame;
             }
         }

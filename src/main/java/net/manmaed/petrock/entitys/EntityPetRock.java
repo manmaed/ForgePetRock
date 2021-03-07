@@ -5,23 +5,15 @@ import net.manmaed.petrock.libs.LogHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -29,86 +21,30 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nullable;
-import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Created by manmaed on 30/08/2019.
+ * Created by manmaed on 07/03/2021.
  */
 public class EntityPetRock extends TameableEntity {
-    protected static final DataParameter<Byte> TAMED = EntityDataManager.createKey(EntityPetRock.class, DataSerializers.BYTE);
-    protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.createKey(EntityPetRock.class, DataSerializers.OPTIONAL_UNIQUE_ID);
-    private boolean sitting;
-
-    public EntityPetRock(EntityType<? extends EntityPetRock> type, World world) {
-        super(type, world);
+    protected EntityPetRock(EntityType<? extends TameableEntity> type, World worldIn) {
+        super(type, worldIn);
         this.setTamed(false);
     }
-    @Override
-    public void writeAdditional(CompoundNBT compound) {
-        super.writeAdditional(compound);
-        if (this.getOwnerId() != null) {
-            compound.putUniqueId("Owner", this.getOwnerId());
-        }
 
-        compound.putBoolean("Sitting", this.sitting);
-    }
-
-    @Override
-    public void readAdditional(CompoundNBT compound) {
-        super.readAdditional(compound);
-        UUID uuid;
-        if (compound.hasUniqueId("Owner")) {
-            uuid = compound.getUniqueId("Owner");
-        } else {
-            String s = compound.getString("Owner");
-            uuid = PreYggdrasilConverter.convertMobOwnerIfNeeded(this.getServer(), s);
-        }
-
-        if (uuid != null) {
-            try {
-                this.setOwnerId(uuid);
-                this.setTamed(true);
-            } catch (Throwable throwable) {
-                this.setTamed(false);
-            }
-        }
-
-        this.sitting = compound.getBoolean("Sitting");
-        this.setSleeping(this.sitting);
-    }
-
-    @Override
-    protected void registerData() {
-        super.registerData();
-        this.dataManager.register(TAMED, (byte)0);
-        this.dataManager.register(OWNER_UNIQUE_ID, Optional.empty());
-    }
-
-    @Override
-    public boolean isSitting() {
-        return this.sitting;
-    }
-
-    public void setSitting(boolean sitbol) {
-        this.sitting = sitbol;
-    }
-
-    protected void registerGoals()
-    {
+    protected void registerGoals() {
+        //Goal Selectors
         this.goalSelector.addGoal(1, new SwimGoal(this));
         this.goalSelector.addGoal(2, new SitGoal(this));
         this.goalSelector.addGoal(3, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
-        this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 8F));
-        this.goalSelector.addGoal(5, new RandomWalkingGoal(this, 1D));
-
+        this.goalSelector.addGoal(4, new BreedGoal(this, 1.0D));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
+        this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+        //Target Selectors
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
-        this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setCallsForHelp());
-
+        this.targetSelector.addGoal(3, new HurtByTargetGoal(this).setCallsForHelp());
     }
-
-
 
     public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
         return MobEntity.func_233666_p_()
@@ -116,99 +52,76 @@ public class EntityPetRock extends TameableEntity {
                 .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D);
     }
 
-    /*protected void registerAttributes()
-    {
-        super.registerAttributes();
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-        if (this.isTamed())
-        {
-            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0D);
-        } else {
-            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(2.0D);
-        }
-    }*/
-
-
-
-    protected void playStepSound(BlockPos pos, BlockState blockIn)
-    {
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState blockIn) {
         this.playSound(SoundEvents.BLOCK_STONE_STEP, 0.15F, 1.0F);
     }
 
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn)
-    {
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
         return SoundEvents.BLOCK_STONE_BREAK;
     }
 
-    protected SoundEvent getDeathSound()
-    {
+    protected SoundEvent getDeathSound() {
         return SoundEvents.BLOCK_STONE_BREAK;
     }
 
     /**
      * Returns the volume for the sounds this mob makes.
      */
-    protected float getSoundVolume()
-    {
+    protected float getSoundVolume() {
         return 0.4F;
     }
 
-    public void setTamed(boolean tamed)
-    {
-        super.setTamed(tamed);
+    public boolean getPRSitting() {
+        return this.navigator.hasPath();
+    }
 
-        if (tamed)
-        {
+    @Override
+    public void setTamed(boolean tamed) {
+        super.setTamed(tamed);
+        if (tamed) {
             this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(20.0D);
             this.setHealth(20.0F);
         } else {
-            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1.0D);
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(2.0D);
         }
-
     }
 
     @Override
-    public boolean isBreedingItem(ItemStack stack) {
-        Item item = stack.getItem();
-        return item.getName().equals(PRItems.kibble);
-    }
-
-    @Override
-    public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
-        ItemStack itemStack = player.getHeldItem(hand);
+    public ActionResultType func_230254_b_(PlayerEntity playerEntity, Hand hand) {
+        ItemStack itemStack = playerEntity.getHeldItem(hand);
         Item item = itemStack.getItem();
-        if(this.world.isRemote) {
-            boolean flag = this.isOwner(player) || this.isTamed() || item == PRItems.stoneium && !this.isTamed();
+        if (this.world.isRemote) {
+            boolean flag = this.isOwner(playerEntity) || this.isTamed() || item == PRItems.stoneium && !this.isTamed();
             return flag ? ActionResultType.CONSUME : ActionResultType.PASS;
         } else {
-            if(this.isTamed()) {
-                if(this.isBreedingItem(itemStack) && this.getHealth() < this.getMaxHealth()) {
-                    if(!player.abilities.isCreativeMode) {
+            if (this.isTamed()) {
+                if (item == PRItems.kibble && this.getHealth() < this.getMaxHealth()) {
+                    if (!playerEntity.abilities.isCreativeMode) {
                         itemStack.shrink(1);
                     }
                     this.heal(3.0F);
                     return ActionResultType.SUCCESS;
                 }
-                if(!(item instanceof DyeItem)) {
-                    ActionResultType actionresulttype = super.func_230254_b_(player, hand);
-                    if ((!actionresulttype.isSuccessOrConsume() || this.isChild()) && this.isOwner(player)) {
-                        if(this.isSitting()) {
-                            this.setSitting(false);
-                        } else {
-                            this.setSitting(true);
-                        }
+                if (!(item instanceof DyeItem)) {
+                    ActionResultType actionresulttype = super.func_230254_b_(playerEntity, hand);
+                    if ((!actionresulttype.isSuccessOrConsume() || this.isChild()) && this.isOwner(playerEntity)) {
+                        LogHelper.warn("before setting sit " + this.isSitting());
+                        this.func_233687_w_(!this.isSitting());
+                        LogHelper.warn("after setting sit " + this.isSitting());
                         this.isJumping = false;
                         this.navigator.clearPath();
                         return ActionResultType.SUCCESS;
                     }
-                    return  actionresulttype;
+
+                    return actionresulttype;
                 }
-            } else if(item == PRItems.stoneium) {
-                if(player.abilities.isCreativeMode) {
+            } else if (item == PRItems.stoneium) {
+                if (!playerEntity.abilities.isCreativeMode) {
                     itemStack.shrink(1);
                 }
-                if(this.rand.nextInt(3) == 0 && !ForgeEventFactory.onAnimalTame(this, player)) {
-                    this.setTamedBy(player);
+                if (this.rand.nextInt(3) == 0 && !ForgeEventFactory.onAnimalTame(this, playerEntity)) {
+                    this.setTamedBy(playerEntity);
                     this.navigator.clearPath();
                     this.func_233687_w_(true);
                     this.world.setEntityState(this, (byte)7);
@@ -217,92 +130,19 @@ public class EntityPetRock extends TameableEntity {
                 }
                 return ActionResultType.SUCCESS;
             }
-            return super.func_230254_b_(player, hand);
+            return super.func_230254_b_(playerEntity, hand);
         }
     }
-    /*@Override
-    public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
-    ItemStack stack = player.getHeldItem(hand);
-        LogHelper.fatal(isOwner(player) + " - " + world.isRemote());
-        if(stack.getItem().equals(Items.NAME_TAG)) {
-            this.setCustomName(stack.getDisplayName());
-        }
-        if (this.isTamed()) {
-            if (this.isOwner(player) && !world.isRemote()) {
-                LogHelper.fatal(isOwner(player) + " - " + world.isRemote());
-                if (stack.getItem() == PRItems.kibble && getHealth() < 20.0F) {
-                    if (!player.abilities.isCreativeMode) {
-                        stack.shrink(1);
-                    }
-                    this.heal(3.0F);
-                    return ActionResultType.SUCCESS;
-                } else {
-                    LogHelper.fatal(this.isSitting());
-                    this.setSitting(!this.isSitting());
-                    isJumping = false;
-                    navigator.clearPath();
-                    return ActionResultType.SUCCESS;
-                }
-            }
-        }
-        else if (!isTamed()) {
-            if (stack.getItem() == PRItems.stoneium ){
-                if (!player.abilities.isCreativeMode) {
-                    stack.shrink(1);
-                }
-
-                if (world.isRemote()) {
-                    if (rand.nextInt(3) == 0) {
-                        setTamedBy(player);
-                        navigator.clearPath();
-                        setSitting(true);
-                        setHealth(20.0F);
-                        playTameEffect(true);
-                        world.setEntityState(this, (byte) 7);
-                        return ActionResultType.PASS;
-                    } else {
-                        playTameEffect(false);
-                        world.setEntityState(this, (byte) 6);
-                        return ActionResultType.PASS;
-                    }
-                }
-
-            }
-            return ActionResultType.FAIL;
-        }
-        return super.interactMob(player, hand);
-    }*/
-
 
     @Nullable
     @Override
-    public AgeableEntity func_241840_a(ServerWorld serverWorld, AgeableEntity ageable) {
-        EntityPetRock petRock = new EntityPetRock((PREntityTypes.PETROCK.get()), this.world);
+    public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity entity) {
+        EntityPetRock petRock = new EntityPetRock((PREntityTypes.PETROCK.get()), world);
         UUID uuid = this.getOwnerId();
-        if(uuid != null) {
+        if (uuid != null) {
             petRock.setOwnerId(uuid);
             petRock.setTamed(true);
-
         }
         return petRock;
-    }
-
-    public boolean canMateWith(AnimalEntity otherAnimal) {
-        if (otherAnimal == this) {
-            return false;
-        } else if (!this.isTamed()) {
-            return false;
-        } else if (!(otherAnimal instanceof EntityPetRock)) {
-            return false;
-        } else {
-            EntityPetRock petRock = (EntityPetRock)otherAnimal;
-            if (!petRock.isTamed()) {
-                return false;
-            } else if (petRock.isSitting()) {
-                return false;
-            } else {
-                return this.isInLove() && petRock.isInLove();
-            }
-        }
     }
 }
