@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PRPHats {
-    private static List<String> playerhats = new ArrayList<>();
+    public static List<String> playerhats = new ArrayList<>();
     private static String uuid = "";
 
     public static void addHatToPlayer(String player_uuid) {

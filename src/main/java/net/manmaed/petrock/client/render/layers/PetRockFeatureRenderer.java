@@ -33,7 +33,7 @@ public class PetRockFeatureRenderer extends LayerRenderer<AbstractClientPlayerEn
 
         if (!entity.isInvisible())  {
             String entityuuid = entity.getEntity().getUniqueID().toString();
-            if (PRPHats.playerHasHat(entityuuid)) {
+            if (PRPHats.playerhats.contains(entityuuid)) {
                 IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEntitySolid(skin));
                 matrixStackIn.push();
                 getEntityModel().bipedHead.translateRotate(matrixStackIn);

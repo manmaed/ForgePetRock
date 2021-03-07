@@ -48,13 +48,7 @@ public class PetRock {
 
     /*
     TODO: World Gen
-    1. Add World Gen
-    2. ablity to disable worldgen via config ( See Configs to do )
-     */
-
-    /*
-    TODO: Configs
-    1. Add Config for worldgen
+    1. Find Out What World gen is doing LOL
      */
 
     private static RegisterHandler registeryHandler;
@@ -73,9 +67,9 @@ public class PetRock {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(PetRockClient::doClientStuff);
         registeryHandler = new RegisterHandler();
         PREntityTypes.ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
-        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+        /*DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
             MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, PetRockClient::doPlayerStuff);
-        });
+        });*/
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, PRConfig.COMMON_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, PRConfig.CLIENT_CONFIG);
         MinecraftForge.EVENT_BUS.addListener(this::serverLoad);

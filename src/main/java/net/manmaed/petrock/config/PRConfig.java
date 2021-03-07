@@ -32,13 +32,13 @@ public class PRConfig {
     private static void setupWorldGenConfig(){
         ENABLE_WORLD_GEN = COMMON_BUILDER.comment("World Gen? [DEFAULT: true]")
                 .define("worldgen_enabled", true);
-        STONEIUM_ORE_CHANCE = COMMON_BUILDER.comment("The chance for Stoneium Ore to generate underground, 1 in X chunks. Bigger number means more rare [DEFAULT: 2]")
-                .defineInRange("stoneium_ore_chance", 2, 1, 10000);
+        STONEIUM_ORE_CHANCE = COMMON_BUILDER.comment("The chance for Stoneium Ore to generate underground, 1 in X chunks. Bigger number means more rare [DEFAULT: 5]")
+                .defineInRange("stoneium_ore_chance", 5, 1, 1000);
         STONEIUM_ORE_VAIN_SIZE = COMMON_BUILDER.comment("Size of a Vain [DEFAULT: 10]")
                 .defineInRange("stoneium_ore_vain_size", 10, 1, 50);
-        STONEIUM_ORE_YMIN = COMMON_BUILDER.comment("The minimum Y level that Stoneium can spawn underground [DEFAULT: 1]")
-                .defineInRange("stoneium_ore_ymin", 1, 0, 255);
-        STONEIUM_ORE_YMAX = COMMON_BUILDER.comment("The maximum Y level that Stoneium can spawn underground [DEFAULT: 100]")
-                .defineInRange("stoneium_ore_ymax", 100, 0, 255);
+        /*STONEIUM_ORE_YMIN = COMMON_BUILDER.comment("The minimum Y level that Stoneium can spawn underground [DEFAULT: 40] [Not Used]")
+                .defineInRange("stoneium_ore_ymin", 40, 0, 255);*/
+        STONEIUM_ORE_YMAX = COMMON_BUILDER.comment("The maximum Y level that Stoneium can spawn underground [DEFAULT: 80]")
+                .defineInRange("stoneium_ore_ymax", 80, 0, 255);
     }
 }

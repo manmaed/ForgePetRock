@@ -25,7 +25,7 @@ public class PetRockClient {
          * LatvianModder Improved!
          */
         new Thread(PRHats::load).start();
-        new Thread(PRPHats::load).start();
+        /*new Thread(PRPHats::load).start();*/
 
     }
 
