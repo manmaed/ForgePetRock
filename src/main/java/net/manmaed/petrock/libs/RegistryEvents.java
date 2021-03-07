@@ -15,15 +15,6 @@ import net.minecraftforge.fml.common.Mod;
  */
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RegistryEvents {
-    /*@SubscribeEvent
-    public static void onEntityRegistry(final RegistryEvent.Register<EntityType<?>> event) {
-        *//*PREntitys.load();*//*
-        event.getRegistry().register(PREntityTypes.PETROCK.get());
-        DeferredWorkQueue.runLater(() -> {
-            GlobalEntityTypeAttributes.put(PREntityTypes.PETROCK.get(), EntityPetRock.setCustomAttributes().func_233813_a_());
-        });
-        //event.getRegistry().register(EntityType.Builder.create(EntityPetRock:: new, EntityClassification.MISC).size(0.5f, 0.5f).build("petrock").setRegistryName("petrock"));
-    }*/
 
     @SubscribeEvent
     public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {

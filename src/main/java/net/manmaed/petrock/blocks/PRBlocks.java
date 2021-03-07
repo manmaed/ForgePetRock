@@ -31,8 +31,9 @@ public class PRBlocks {
 
         PetRock.getRegisteryHandler().registerBlock(stoneiumore);
         PetRock.getRegisteryHandler().registerBlock(stoneiumblock);
-
     }
+
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, Refs.id);
     public static final RegistryObject<Feature<OreFeatureConfig>> STONEIUMOREFEATURES = FEATURES.register("stoneiumfeature", () -> new StoneiumOreFeature(OreFeatureConfig.CODEC));
+
 }

@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
  * Created by manmaed on 30/08/2019.
  */
 public class RenderPetRock extends MobRenderer<EntityPetRock, ModelPetRock<EntityPetRock>> {
+
     public RenderPetRock(EntityRendererManager manager) {
         super(manager, new ModelPetRock(), 0.25F);
         this.addLayer(new BirthdayFeatureRenderer(this));
@@ -22,7 +23,6 @@ public class RenderPetRock extends MobRenderer<EntityPetRock, ModelPetRock<Entit
         this.addLayer(new SlowpokeFeatureRenderer(this));
         this.addLayer(new CageFeatureRenderer(this));
         this.addLayer(new SignFeatureRenderer(this));
-        /*this.addFeature(toString());*/
     }
 
     private static final ResourceLocation skinuntame = new ResourceLocation(Refs.id, "textures/entity/petrock.png");
@@ -37,8 +37,7 @@ public class RenderPetRock extends MobRenderer<EntityPetRock, ModelPetRock<Entit
             } else {
                 return skintame;
             }
-        }
-        else {
+        } else {
             return skinuntame;
         }
     }
