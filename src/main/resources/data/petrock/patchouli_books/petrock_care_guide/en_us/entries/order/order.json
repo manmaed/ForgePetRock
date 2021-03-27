@@ -1,0 +1,17 @@
+{
+  "name": "Order Form",
+  "icon": "petrock:orderform",
+  "category": "petrock:order_category",
+  "pages": [
+    {
+      "type": "text",
+      "title": "Order Form",
+      "text": "This is a form you automaticly fill to get your petrock!"
+    },
+    {
+      "type": "crafting",
+      "recipe": "petrock:orderform",
+      "text": "This Will give you a PetRock in a box!"
+    }
+  ]
+}

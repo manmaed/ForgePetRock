@@ -1,0 +1,25 @@
+{
+  "name": "What the PetRock faces mean",
+  "icon": "petrock:petrockbox",
+  "category": "petrock:petrock_category",
+  "pages": [
+    {
+      "type": "image",
+      "images": ["petrock:textures/patchouli/untamed.png"],
+      "border": true,
+      "text": "An UnTamed PetRock"
+    },
+    {
+      "type": "image",
+      "images": ["petrock:textures/patchouli/tamed.png"],
+      "border": true,
+      "text": "An Tamed PetRock"
+    },
+    {
+      "type": "image",
+      "images": ["petrock:textures/patchouli/tamed_sit.png"],
+      "border": true,
+      "text": "An Tamed PetRock that's sitting down"
+    }
+  ]
+}
