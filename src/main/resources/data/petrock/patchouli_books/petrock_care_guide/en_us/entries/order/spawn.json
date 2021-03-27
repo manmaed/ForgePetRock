@@ -1,0 +1,16 @@
+{
+  "name": "Spawning your new pet",
+  "icon": "petrock:petrockbox",
+  "category": "petrock:order_category",
+  "pages": [
+    {
+      "type": "text",
+      "title": "How To Spawn",
+      "text": "This item will spawn a new untamed PetRock where you clicked"
+    },
+    {
+      "type": "entity",
+      "entity": "petrock:petrock"
+    }
+  ]
+}

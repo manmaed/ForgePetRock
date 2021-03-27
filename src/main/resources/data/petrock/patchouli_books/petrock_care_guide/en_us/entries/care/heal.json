@@ -1,0 +1,16 @@
+{
+  "name": "Healing",
+  "icon": "petrock:kibble",
+  "category": "petrock:care_category",
+  "pages": [
+    {
+      "type": "text",
+      "title": "Kibble",
+      "text": "Use Kibble to heal your damaged PetRock"
+    },
+    {
+      "type": "crafting",
+      "recipe": "petrock:kibble"
+    }
+  ]
+}

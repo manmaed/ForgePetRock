@@ -1,0 +1,37 @@
+{
+  "name": "What the PetRock hats mean",
+  "icon": "petrock:petrockbox",
+  "category": "petrock:petrock_category",
+  "pages": [
+    {
+      "type": "image",
+      "images": ["petrock:textures/patchouli/birthday.png"],
+      "border": false,
+      "text": "Birthday Hat"
+    },
+    {
+      "type": "image",
+      "images": ["petrock:textures/patchouli/halloween.png"],
+      "border": false,
+      "text": "Halloween Hat"
+    },
+    {
+      "type": "image",
+      "images": ["petrock:textures/patchouli/christmas.png"],
+      "border": false,
+      "text": "Christmas Hat"
+    },
+    {
+      "type": "image",
+      "images": ["petrock:textures/patchouli/lone.png"],
+      "border": false,
+      "text": "Loneztars Birthday Hat"
+    },
+    {
+      "type": "image",
+      "images": ["petrock:textures/patchouli/slowpoke.png"],
+      "border": false,
+      "text": "Slowpokes Birthday Hat"
+    }
+  ]
+}

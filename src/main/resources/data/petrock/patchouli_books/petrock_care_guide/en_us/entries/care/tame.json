@@ -1,0 +1,22 @@
+{
+  "name": "Taming A PetRock",
+  "icon": "petrock:stoneium",
+  "category": "petrock:care_category",
+  "pages": [
+    {
+      "type": "text",
+      "title": "Stoneium",
+      "text": "Stoneium Spawns in the Overworld. Use The Stoneium Ingots to tame a Petrock"
+    },
+    {
+      "type": "spotlight",
+      "item": "petrock:stoneiumore",
+      "text": "Mine to get Stoneium"
+    },
+    {
+      "type": "spotlight",
+      "item": "petrock:stoneium",
+      "text": "Drops from Stoneium Ore"
+    }
+  ]
+}
