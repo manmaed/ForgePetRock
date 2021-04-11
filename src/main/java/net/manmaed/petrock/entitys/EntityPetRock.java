@@ -106,9 +106,9 @@ public class EntityPetRock extends TameableEntity {
                 if (!(item instanceof DyeItem)) {
                     ActionResultType actionresulttype = super.func_230254_b_(playerEntity, hand);
                     if ((!actionresulttype.isSuccessOrConsume() || this.isChild()) && this.isOwner(playerEntity)) {
-                        LogHelper.warn("before setting sit " + this.isSitting());
+                        /*LogHelper.warn("before setting sit " + this.isSitting());*/
                         this.func_233687_w_(!this.isSitting());
-                        LogHelper.warn("after setting sit " + this.isSitting());
+                        /*LogHelper.warn("after setting sit " + this.isSitting());*/
                         this.isJumping = false;
                         this.navigator.clearPath();
                         return ActionResultType.SUCCESS;
