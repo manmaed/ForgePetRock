@@ -1,16 +1,30 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "BS"
-  ],
-  "key": {
-    "S": { "item": "petrock:stoneium" },
-    "B": { "item":  "minecraft:book"}
-  },
-  "result": {
-    "item": "patchouli:guide_book",
-    "nbt": {
-      "patchouli:book": "petrock:petrock_care_guide"
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "patchouli"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shapeless",
+        "ingredients": [
+          {
+            "item": "minecraft:book"
+          },
+          {
+            "item": "petrock:stoneium"
+          }
+        ],
+        "result": {
+          "item": "patchouli:guide_book",
+          "nbt": {
+            "patchouli:book": "petrock:petrock_care_guide"
+          }
+        }
+      }
     }
-  }
+  ]
 }
