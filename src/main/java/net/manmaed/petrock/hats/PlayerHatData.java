@@ -3,7 +3,6 @@ package net.manmaed.petrock.hats;
 import com.google.common.base.Charsets;
 import com.google.gson.Gson;
 import net.manmaed.petrock.libs.LogHelper;
-import net.minecraft.client.Minecraft;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;

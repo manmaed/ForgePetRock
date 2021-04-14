@@ -4,7 +4,6 @@ package net.manmaed.petrock.client.render.entity;
 import net.manmaed.petrock.client.render.layers.*;
 import net.manmaed.petrock.client.render.model.ModelPetRock;
 import net.manmaed.petrock.entitys.EntityPetRock;
-import net.manmaed.petrock.libs.LogHelper;
 import net.manmaed.petrock.libs.Refs;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;

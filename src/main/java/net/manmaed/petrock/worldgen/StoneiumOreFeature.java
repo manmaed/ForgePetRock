@@ -1,7 +1,6 @@
 package net.manmaed.petrock.worldgen;
 
 import com.mojang.serialization.Codec;
-import net.manmaed.petrock.libs.LogHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.ISeedReader;

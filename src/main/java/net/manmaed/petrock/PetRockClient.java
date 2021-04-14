@@ -4,7 +4,6 @@ import net.manmaed.petrock.client.render.entity.RenderPetRock;
 import net.manmaed.petrock.client.render.layers.PetRockFeatureRenderer;
 import net.manmaed.petrock.entitys.PREntityTypes;
 import net.manmaed.petrock.hats.PRHats;
-import net.manmaed.petrock.hats.PRPHats;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;

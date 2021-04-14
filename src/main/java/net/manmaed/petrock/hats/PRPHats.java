@@ -1,7 +1,5 @@
 package net.manmaed.petrock.hats;
 
-import net.manmaed.petrock.libs.LogHelper;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
