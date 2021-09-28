@@ -6,6 +6,7 @@ import net.manmaed.petrock.config.PRConfig;
 import net.manmaed.petrock.entitys.EntityPetRock;
 import net.manmaed.petrock.entitys.PREntityTypes;
 import net.manmaed.petrock.items.PRItems;
+import net.manmaed.petrock.libs.LogHelper;
 import net.manmaed.petrock.libs.Refs;
 import net.manmaed.petrock.libs.RegisterHandler;
 import net.manmaed.petrock.worldgen.WorldGenHandler;
@@ -41,12 +42,20 @@ public class PetRock {
      */
 
     private static RegisterHandler registeryHandler;
+    private static boolean ishatsloaded = false;
     public static final ItemGroup itemGroup = new ItemGroup(Refs.id) {
         @Override
         public ItemStack createIcon() {
             return new ItemStack(PRItems.petrockbox);
         }
     };
+
+    public static boolean getHatsLoaded() {
+        return ishatsloaded;
+    }
+    public static void setHatsLoaded() {
+        ishatsloaded = true;
+    }
 
     public PetRock() {
         IEventBus event = FMLJavaModLoadingContext.get().getModEventBus();

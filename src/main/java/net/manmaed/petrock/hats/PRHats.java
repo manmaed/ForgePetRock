@@ -1,5 +1,6 @@
 package net.manmaed.petrock.hats;
 
+import net.manmaed.petrock.PetRock;
 import net.manmaed.petrock.libs.LogHelper;
 
 import java.net.URL;
@@ -26,48 +27,49 @@ public class PRHats {
         slowpoke = false;
         loneztar = false;
         try {
-            hatData = HatData.getHatData(new URL("https://raw.githubusercontent.com/manmaed/Pet-Rock/master/hats.json"));
-            //hatData = HatData.getHatData(new URL("file:///G:/Modding/Forge/1_16_5/PetRock/run/hattesting.json"));
-            String hat = hatData.isEventActive();
-            usernames = hatData.getUsername();
-            if(!userslow) {
-                if(hat.equalsIgnoreCase("christmas")) {
-                    christmas = true;
-                }
-                if(hat.equalsIgnoreCase("halloween")) {
-                    halloween = true;
-                }
-                else if (hat.equalsIgnoreCase("birthday")) {
-                    birthday = true;
-                    if (hatData.getUsername().equalsIgnoreCase("manmaed")) {
-                        LogHelper.fatal("Please inform manmaed of this error: Happy Birthday!");
+            if (!PetRock.getHatsLoaded()) {
+                hatData = HatData.getHatData(new URL("https://raw.githubusercontent.com/manmaed/Pet-Rock/master/hats.json"));
+                //hatData = HatData.getHatData(new URL("file:///G:/Modding/Forge/1_16_5/PetRock/run/hattesting.json"));
+                String hat = hatData.isEventActive();
+                usernames = hatData.getUsername();
+                if (!userslow) {
+                    if (hat.equalsIgnoreCase("christmas")) {
+                        christmas = true;
+                    }
+                    if (hat.equalsIgnoreCase("halloween")) {
+                        halloween = true;
+                    } else if (hat.equalsIgnoreCase("birthday")) {
+                        birthday = true;
+                        if (hatData.getUsername().equalsIgnoreCase("manmaed")) {
+                            LogHelper.fatal("Please inform manmaed of this error: Happy Birthday!");
                         }
-                    if (hatData.getUsername().equalsIgnoreCase("Slowpoke101")) {
-                        slowpoke = true;
+                        if (hatData.getUsername().equalsIgnoreCase("Slowpoke101")) {
+                            slowpoke = true;
                         }
-                    if (hatData.getUsername().equalsIgnoreCase("Loneztar")) {
-                        birthday = false;
-                        loneztar = true;
-                        LogHelper.info("Happy Birthday Loneztar");
-                    } else {
-                        LogHelper.info("Happy Birthday " + hatData.getUsername());
+                        if (hatData.getUsername().equalsIgnoreCase("Loneztar")) {
+                            birthday = false;
+                            loneztar = true;
+                            LogHelper.info("Happy Birthday Loneztar");
+                        } else {
+                            LogHelper.info("Happy Birthday " + hatData.getUsername());
+                        }
                     }
                 }
-            }
-            if (userslow) {
-                /*slowisplaying();*/
-                slowpoke = true;
-                if (hat.equalsIgnoreCase("birthday") & hatData.getUsername().equalsIgnoreCase("Slowpoke101")) {
-                    birthday = true;
-                    LogHelper.info("Happy Birthday Slowpoke101");
-                }
-                if (hat.equalsIgnoreCase("christmas")) {
-                    christmas = true;
-                    LogHelper.info("Happy Christmas Slowpoke101");
+                if (userslow) {
+                    /*slowisplaying();*/
+                    slowpoke = true;
+                    if (hat.equalsIgnoreCase("birthday") & hatData.getUsername().equalsIgnoreCase("Slowpoke101")) {
+                        birthday = true;
+                        LogHelper.info("Happy Birthday Slowpoke101");
+                    }
+                    if (hat.equalsIgnoreCase("christmas")) {
+                        christmas = true;
+                        LogHelper.info("Happy Christmas Slowpoke101");
                 /*} else {
                     christmas = false;
                     halloween = false;
                     birthday = false;*/
+                    }
                 }
             }
         } catch (Exception e) {
